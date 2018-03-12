@@ -1,55 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Wingspan Delivery Services Statistics</title>
-<meta name="description"
-      content="Tool to display enhanced statistics. Originally developed by Valtyr Farshield. Rewritten by Lenai Chelien (@Second_Fry).">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="/css/app.min.css">
-<link rel="stylesheet" href="/css/app-desktop.min.css" media="(min-width: 768px)">
-<link rel="stylesheet" href="/css/vue.min.css">
-<link rel="stylesheet" href="/css/vue-desktop.min.css" media="(min-width: 768px)">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Wingspan Delivery Services Statistics</title>
+  <meta name="description"
+        content="Tool to display enhanced statistics. Originally developed by Valtyr Farshield. Rewritten by Lenai Chelien (@Second_Fry).">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="/css/app.min.css">
+  <link rel="stylesheet" href="/css/app-desktop.min.css" media="(min-width: 768px)">
+  <link rel="stylesheet" href="/css/vue.min.css">
+  <link rel="stylesheet" href="/css/vue-desktop.min.css" media="(min-width: 768px)">
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark navbar-fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="/">Wingspan Delivery Services Statistics</a>
-  </div>
-</nav>
-<div class="container my-3">
-  <div class="row">
-    <div class="col" id="root">
-      <view-all-time></view-all-time>
-      <view-month></view-month>
-    </div>
-  </div>
+<div id="root">
+  <router-view></router-view>
 </div>
-<div class="p-3 my-3 text-center bg-success text-light">We are back!</div>
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col text-center">
-        <p>
-          Adapted for web by <a href="https://twitter.com/Second_Fry">@Second_Fry</a> (<a href="https://zkillboard.com/character/91435934/">Lenai Chelien</a>) in January, 2016.<br>
-          Rewritten in March, 2016.<br>
-          Rewritten in March, 2018. Consistency!<br>
-          Also check <a target="_blank" href="https://www.youtube.com/user/SecondFry">my YouTube channel</a> :P.
-        </p>
-        <p>Original idea by <a href="https://zkillboard.com/character/92805979/">Valtyr Farshield</a> @ <a
-            href="https://github.com/farshield/wingspanstats">GitHub</a>.</p>
-      </div>
-    </div>
-  </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js" integrity="sha384-U/+EF1mNzvy5eahP9DeB32duTkAmXrePwnRWtuSh1C/bHHhyR1KZCr/aGZBkctpY" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.21.0/moment.min.js" integrity="sha384-QemPrM9utsfoJMm+IyLVTz211d93RFJ8921lJGf5aaXQjKDwAO8qJy94nlDvVuKz" crossorigin="anonymous"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js" integrity="sha384-VsEMqPNUvx1A08X52lHGP/3aBJntt3ddLQxK2QHyQ//NrJTjFwUMeDiSXz9s63XQ" crossorigin="anonymous"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"
+        integrity="sha384-U/+EF1mNzvy5eahP9DeB32duTkAmXrePwnRWtuSh1C/bHHhyR1KZCr/aGZBkctpY"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.21.0/moment.min.js"
+        integrity="sha384-QemPrM9utsfoJMm+IyLVTz211d93RFJ8921lJGf5aaXQjKDwAO8qJy94nlDvVuKz"
+        crossorigin="anonymous"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"-->
+        <!--integrity="sha384-VsEMqPNUvx1A08X52lHGP/3aBJntt3ddLQxK2QHyQ//NrJTjFwUMeDiSXz9s63XQ"-->
+        <!--crossorigin="anonymous"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuex@3.0.1/dist/vuex.min.js" integrity="sha384-8yvWnsU6LFumnVSXB10xSFewFVCar2ZbXD7W1kIojnBX+EJgZS0rVrSEBtTZTKXN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuex@3.0.1/dist/vuex.min.js"
+        integrity="sha384-8yvWnsU6LFumnVSXB10xSFewFVCar2ZbXD7W1kIojnBX+EJgZS0rVrSEBtTZTKXN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-router@3.0.1/dist/vue-router.min.js"
+        integrity="sha384-g4QZ3CgAtAdAvMxrn/IlcxAxZxqs+hDd0fcj0GMX8Qf3IfjXu0VBHY8d3sq0UCRV"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/localforage@1.6.0/dist/localforage.min.js"></script>
 <script src="/js/app.bundle.js"></script>
 </body>

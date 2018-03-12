@@ -1,19 +1,19 @@
 <script>
 
   export default {
-    props: ['data'],
+    props: ['pilot', 'type'],
     computed: {
       display () {
         switch (this.flagType) {
-          case 'count': return this.data.value + ' deliveries';
-          case 'value': return (this.data.value / Math.pow(10, 9)).toFixed(2) + 'B ISK';
-          case 'damage': return (this.data.value / Math.pow(10, 6)).toFixed(2) + 'M CRPs';
-          case 'dedication': return this.data.value + ' dedication index';
-          case 'diversity': return this.data.value + ' diversity index';
+          case 'count': return this.pilot.value + ' deliveries';
+          case 'value': return (this.pilot.value / Math.pow(10, 9)).toFixed(2) + 'B ISK';
+          case 'damage': return (this.pilot.value / Math.pow(10, 6)).toFixed(2) + 'M CRPs';
+          case 'dedication': return this.pilot.value + ' dedication index';
+          case 'diversity': return this.pilot.value + ' diversity index';
         }
       },
       flagType () {
-        return this.data._id.flag.split('_').pop()
+        return this.type.split('_').pop()
       }
     }
   }

@@ -1,19 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueRouter from 'vue-router'
 import VueLocalForage from 'vue-localforage'
+import router from './router'
 import store from './store'
-
-import ViewAllTime from './components/view-alltime.vue'
-import ViewMonth from './components/view-month.vue'
 
 Vue.use(Vuex);
 Vue.use(VueLocalForage);
+Vue.use(VueRouter);
 
 const app = new Vue({
+  router,
   store,
   el: '#root',
-  components: {
-    ViewAllTime,
-    ViewMonth
-  }
 });

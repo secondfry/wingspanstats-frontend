@@ -12,7 +12,7 @@
         }
       },
       zkb () {
-        return 'https://zkillboard.com/pilot/' + this.id + '/'
+        return 'https://zkillboard.com/character/' + this.id + '/'
       },
       image () {
         return 'https://image.eveonline.com/Character/' + this.id + '_' + this.size + '.jpg'

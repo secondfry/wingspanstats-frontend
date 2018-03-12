@@ -6,6 +6,7 @@
   export default {
     computed: {
       ...mapState({
+        isLoaded: state => state.alltime.isLoaded,
         value: state => (state.alltime.data.value / Math.pow(10, 12)).toFixed(2),
         count: state => state.alltime.data.count,
         damage: state => (state.alltime.data.damage / Math.pow(10, 9)).toFixed(2)
@@ -17,7 +18,9 @@
       ])
     },
     created () {
-      this.loadAlltimeFast();
+      if (!this.isLoaded) {
+        this.loadAlltimeFast();
+      }
     },
     data () {
       return {

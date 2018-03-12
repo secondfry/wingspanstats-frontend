@@ -9,7 +9,8 @@ const pilots = {
 
 export default {
   state: {
-    data: {}
+    data: {},
+    isLoaded: false,
   },
   getters: {
     getPilotName: state => id => {
@@ -20,9 +21,11 @@ export default {
   mutations: {
     [pilots.CACHE_HIT] (state, data) {
       state.data = data;
+      state.isLoaded = true;
     },
     [pilots.LOAD_SUCCESS] (state, data) {
       state.data = data;
+      state.isLoaded = true;
     },
   },
   actions: {
@@ -31,7 +34,7 @@ export default {
         .then(data => {
           if (data) {
             commit(pilots.CACHE_HIT, data);
-          }          
+          }
         })
         .then(() => {
           dispatch('loadPilots');
@@ -43,7 +46,7 @@ export default {
       return axios
         .get('/api/pilots/')
         .then(res => {
-          const ret = {}
+          const ret = {};
           for (let pilot of res.data) {
             ret[pilot._id] = pilot
           }

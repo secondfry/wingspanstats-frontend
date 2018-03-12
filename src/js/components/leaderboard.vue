@@ -4,28 +4,55 @@
   import PilotIcon from './pilot-icon.vue'
   import LeaderboardTicker from './leaderboard/leaderboard-ticker.vue'
 
+  import iconPlane from '../../files/plane.svg'
+  import iconGrave from '../../files/grave.svg'
   import leaderboards from './view-month/registry-leaderboards'
+  const realLeaderboards = JSON.parse(JSON.stringify(leaderboards));
 
   export default {
     props: ['type', 'title'],
+    data () {
+      return {
+        iconGrave,
+        iconPlane,
+        leaderboards: realLeaderboards,
+      }
+    },
     computed: {
-      ...mapState({
-        state: state => state.month.leaderboards,
-        pilots: state => state.pilots.data
-      }),
       ...mapGetters([
         'getPilotName',
+        'getCategory'
       ]),
+      typeArray () {
+        return this.type.split('_');
+      },
+      isShipCategory () {
+        return this.typeArray.length === 3;
+      },
+      isValueCategory () {
+        return this.typeArray[this.typeArray.length - 1] === 'value' && this.typeArray[0] !== 'value';
+      },
+      icon () {
+        if (!this.isShipCategory) {
+          return undefined;
+        }
+
+        switch (this.typeArray[1]) {
+          case 'driver': return this.iconPlane;
+          case 'killer': return this.iconGrave;
+          default: return undefined;
+        }
+      },
       _title () {
         if (this.title) {
           return this.title;
         }
 
-        if (this.type.split('_').pop() === 'value' && this.type.split('_').pop() !== this.type) {
+        if (this.isValueCategory) {
           return '';
         }
 
-        const data = leaderboards[this.type];
+        const data = this.leaderboards[this.type];
         if (!data || !data.name) {
           return this.type;
         }
@@ -33,28 +60,26 @@
         return data.name;
       },
       text () {
-        if (this.type.split('_').pop() === 'value' && this.type.split('_').pop() !== this.type) {
+        if (this.isValueCategory) {
           return '';
         }
 
-        const data = leaderboards[this.type];
-        if (!data || !data.name) {
+        const data = this.leaderboards[this.type];
+        if (!data || !data.empty) {
           return '';
         }
 
         return data.empty;
       },
-      key () {
-        return this.type;
-      },
       data () {
         const ret = {1: [], 2: [], 3: []};
+        const tmp = this.getCategory(this.type);
 
-        if (!Object.keys(this.state).length) {
+        if (!tmp) {
           return ret;
         }
 
-        for (let item of this.state[this.key]) {
+        for (let item of tmp) {
           if (item.place > 3) {
             break;
           }
@@ -64,6 +89,9 @@
         
         return ret;
       },
+      url () {
+        return '/category/' + this.type;
+      }
     },
     methods: {
       getPlaceClass (place) {
@@ -92,6 +120,15 @@
         }
 
         return false
+      },
+      navigate (e) {
+        e.preventDefault();
+        this.$router.push({
+          name: 'category',
+          params: {
+            category: this.type
+          }
+        });
       }
     },
     components: {
@@ -103,16 +140,25 @@
 
 <template>
   <div class="leaderboard-wrap">
-    <div class="font-weight-bold" v-html="_title"></div>
+    <div class="leaderboard-actions">
+      <div class="font-weight-bold" v-html="_title"></div>
+      <small>
+        <span v-if="isShipCategory && !isValueCategory" class="leaderboard-ship-tip text-muted">
+          <img :src="icon" class="leaderboard-icon">
+          {{ typeArray[0] }}
+        </span>
+        <a :href="url" @click="navigate">Overview ({{ typeArray[typeArray.length - 1] }})</a>
+      </small>
+    </div>
     <div class="leaderboard-places" v-for="list in data" v-if="list.length">
       <div :class="['place', getListSizeClass(list)]" v-for="pilot in list">
         <div :class="['h-100', getPlaceClass(pilot.place)]"></div>
-        <pilot-icon :id="pilot.character_id" :type="getListSize(list)" :category="key"></pilot-icon>
+        <pilot-icon :id="pilot.character_id" :type="getListSize(list)" :category="type"></pilot-icon>
         <a class="place-name ml-2">
           {{ getPilotName(pilot.character_id) }}
           <br v-if="list.length == 1">
           <span v-if="list.length != 1">–</span>
-          <leaderboard-ticker :data="pilot"></leaderboard-ticker>
+          <leaderboard-ticker :type="type" :pilot="pilot"></leaderboard-ticker>
         </a>
       </div>
     </div>
@@ -129,6 +175,16 @@
       grid-template-columns: 1fr 3fr 3fr 3fr;
       grid-column-gap: 0.5em;
     }
+  }
+  .leaderboard-ship-tip {
+    display: grid;
+    grid-template-columns: min-content min-content;
+    grid-column-gap: 0.5em;
+    align-items: center;
+    line-height: 0;
+  }
+  .leaderboard-icon {
+    width: 15px;
   }
   .leaderboard-places {
     display: grid;

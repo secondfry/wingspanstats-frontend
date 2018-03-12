@@ -13,14 +13,17 @@ export default {
       value: undefined,
       count: undefined,
       damage: undefined
-    }
+    },
+    isLoaded: false,
   },
   mutations: {
     [alltime.CACHE_HIT] (state, data) {
       state.data = data;
+      state.isLoaded = true;
     },
     [alltime.LOAD_SUCCESS] (state, data) {
       state.data = data;
+      state.isLoaded = true;
     },
   },
   actions: {
@@ -39,7 +42,7 @@ export default {
     loadAlltime ({ commit }) {
       commit(alltime.REQUEST);
       return axios
-        .get('/api/alltime/')
+        .get('/api/summary/')
         .then(res => {
           this._vm.$setItem('alltime', res.data);
           commit(alltime.LOAD_SUCCESS, res.data);

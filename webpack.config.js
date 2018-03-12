@@ -58,5 +58,6 @@ module.exports = {
     moment: 'moment',
     vue: 'Vue',
     vuex: 'Vuex',
+    'vue-router': 'VueRouter'
   }
 };

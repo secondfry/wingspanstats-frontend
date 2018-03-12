@@ -11,17 +11,22 @@
   import WeaponIcon from './weapon-icon.vue'
 
   import leaderboards from './view-month/registry-leaderboards'
+  const realLeaderboards = JSON.parse(JSON.stringify(leaderboards));
 
   export default {
     props: ['month', 'year'],
     data () {
       return {
-        monthData: this.month,
-        yearData: this.year,
-        leaderboards
+        monthData: this.month || moment().month() + 1,
+        yearData: this.year || moment().year(),
+        leaderboards: realLeaderboards
       }
     },
     computed: {
+      ...mapState({
+        isMonthLoaded: state => state.month.isLoaded,
+        arePilotsLoaded: state => state.pilots.isLoaded,
+      }),
       ...mapGetters([
         'getFirstInCategory',
         'getPilotName'
@@ -73,8 +78,8 @@
         'loadPilotsFast',
       ]),
       setMonth (year, month) {
-        this.monthData = month;
-        this.yearData = year;
+        this.monthData = Number(month);
+        this.yearData = Number(year);
       },
       sort (arr) {
         return arr.sort(function(a, b) {
@@ -83,17 +88,25 @@
       }
     },
     created () {
-      this.loadMonthFast(this.date);
-      this.loadPilotsFast();
+      if (!this.isMonthLoaded) {
+        this.loadMonthFast(this.date);
+      }
+
+      if (!this.arePilotsLoaded) {
+        this.loadPilotsFast();
+      }
+
       EventBus.$on('month', ({ year, month }) => {
-        this.setMonth(year, month)
-        console.log(this.today.diff(this.moment, 'months'));
-        if (this.today.diff(this.moment, 'months') > 1) {
+        this.setMonth(year, month);
+        if (this.today.diff(moment().year(year).month(month), 'months') > 1) {
           this.loadMonthCache(this.date);
         } else {
           this.loadMonthFast(this.date);
         }        
       });
+    },
+    destroyed () {
+      EventBus.$off('month');
     },
     components: {
       Leaderboard,
@@ -119,7 +132,7 @@
       {{ getPilotName(dedicated.character_id) }} | Most dedicated pilot
       <span class="d-none d-md-inline">|</span><br class="d-block d-md-none">
       {{ dedicated.value }} deliveries on
-      <ship-icon :id="dedicated._id.ship_type_id"></ship-icon><weapon-icon :id="dedicated._id.weapon_type_id"></weapon-icon>
+      <ship-icon :id="dedicated.match.ship_type_id"></ship-icon><weapon-icon :id="dedicated.match.weapon_type_id"></weapon-icon>
     </div>
     <div v-if="diverse" class="text-center my-3">
       <pilot-icon :id="diverse.character_id"></pilot-icon>

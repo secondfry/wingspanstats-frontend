@@ -229,5 +229,7 @@
   }
   .leaderboard-message {
     grid-area: 1 / 2 / 1 / 5;
+    display: grid;
+    align-items: center;
   }
 </style>

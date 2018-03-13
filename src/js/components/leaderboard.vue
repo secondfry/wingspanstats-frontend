@@ -6,6 +6,7 @@
 
   import iconPlane from '../../files/plane.svg'
   import iconGrave from '../../files/grave.svg'
+  import iconSwords from '../../files/swords.svg'
   import leaderboards from './view-month/registry-leaderboards'
   const realLeaderboards = JSON.parse(JSON.stringify(leaderboards));
 
@@ -15,6 +16,7 @@
       return {
         iconGrave,
         iconPlane,
+        iconSwords,
         leaderboards: realLeaderboards,
       }
     },
@@ -27,12 +29,23 @@
         return this.type.split('_');
       },
       isShipCategory () {
-        return this.typeArray.length === 3;
+        const check = new Set(['driver', 'killer']);
+        return this.typeArray.length === 3 && check.has(this.typeArray[1]);
+      },
+      isWeaponCategory () {
+        return this.typeArray.length === 3 && this.typeArray[1] === 'user';
       },
       isValueCategory () {
         return this.typeArray[this.typeArray.length - 1] === 'value' && this.typeArray[0] !== 'value';
       },
+      isShowingTip () {
+        return (this.isShipCategory || this.isWeaponCategory) && !this.isValueCategory;
+      },
       icon () {
+        if (this.isWeaponCategory) {
+          return this.iconSwords;
+        }
+
         if (!this.isShipCategory) {
           return undefined;
         }
@@ -143,7 +156,7 @@
     <div class="leaderboard-actions">
       <div class="font-weight-bold" v-html="_title"></div>
       <small>
-        <span v-if="isShipCategory && !isValueCategory" class="leaderboard-ship-tip text-muted">
+        <span v-if="isShowingTip" class="leaderboard-ship-tip text-muted">
           <img :src="icon" class="leaderboard-icon">
           {{ typeArray[0] }}
         </span>
@@ -181,7 +194,7 @@
     grid-template-columns: min-content min-content;
     grid-column-gap: 0.5em;
     align-items: center;
-    line-height: 0;
+    line-height: 1;
   }
   .leaderboard-icon {
     width: 15px;

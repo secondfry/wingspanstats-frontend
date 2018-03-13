@@ -8,6 +8,12 @@
         this.$router.push({
           name: 'root'
         });
+      },
+      reset (e) {
+        return localforage.clear().then(() => {
+            location.reload();
+          }
+        )
       }
     },
     components: {
@@ -20,7 +26,12 @@
   <div>
     <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="/" @click="navigate">Wingspan Delivery Services Statistics</a>
+        <a class="navbar-brand mr-auto" href="/" @click="navigate">Wingspan Delivery Services Statistics</a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-item nav-link" href="#" @click="reset">Reset</a>
+          </li>
+        </ul>
       </div>
     </nav>
     <div class="container my-3">

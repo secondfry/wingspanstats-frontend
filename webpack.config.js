@@ -55,6 +55,7 @@ module.exports = {
   },
   externals: {
     axios: 'axios',
+    localforage: 'localforage',
     moment: 'moment',
     vue: 'Vue',
     vuex: 'Vuex',

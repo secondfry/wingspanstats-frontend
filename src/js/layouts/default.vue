@@ -43,13 +43,14 @@
       </div>
     </div>
     <div class="p-3 my-3 text-center bg-success text-light">We are back!</div>
-    <footer>
+    <footer class="sf-footer">
       <div class="container">
         <div class="row">
           <div class="col text-center">
             <p>
-              Adapted for web by <a href="https://twitter.com/Second_Fry">@Second_Fry</a> (<a
-                href="https://zkillboard.com/character/91435934/">Lenai Chelien</a>) in January, 2016.<br>
+              Yours truly, <a href="https://twitter.com/Second_Fry">@Second_Fry</a> (<a
+                href="https://zkillboard.com/character/91435934/">Lenai Chelien</a>).
+              Adapted for web by in January, 2016.<br>
               Rewritten in March, 2016.<br>
               Rewritten in March, 2018. Consistency!<br>
               Also check <a target="_blank" href="https://www.youtube.com/user/SecondFry">my YouTube channel</a> :P.
@@ -62,3 +63,12 @@
     </footer>
   </div>
 </template>
+
+<style lang="scss">
+  .sf-footer {
+    margin-bottom: 80px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: unset;
+    }
+  }
+</style>

@@ -228,8 +228,12 @@
     background: $color-wingspan;
   }
   .leaderboard-message {
-    grid-area: 1 / 2 / 1 / 5;
+    grid-area: 2 / 1;
     display: grid;
     align-items: center;
+
+    @include media-breakpoint-up(md) {
+      grid-area: 1 / 2 / 1 / 5;
+    }
   }
 </style>

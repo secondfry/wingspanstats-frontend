@@ -85,7 +85,7 @@
 </script>
 
 <template>
-  <div class="timeline my-3" ref="timeline">
+  <div class="timeline my-md-3" ref="timeline">
     <div class="scroller" ref="scroller">
       <div v-for="months, year in years" class="year px-3">
         <div class="text-center">{{ year }}</div>
@@ -99,11 +99,25 @@
 
 <style lang="scss">
   .timeline {
-    position: relative;
-    height: 100px;
     overflow-x: scroll;
     overflow-y: hidden;
     border: 1px solid #818a91;
+    background: #fff;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 80px;
+    @include media-breakpoint-up(md) {
+      position: relative;
+      bottom: unset;
+      left: unset;
+      right: unset;
+      z-index: unset;
+      height: 100px;
+    }
   }
   .scroller {
     position: absolute;

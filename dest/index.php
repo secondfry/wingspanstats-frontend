@@ -178,6 +178,10 @@ class Registry {
         'thera_count',
         'thera_value',
         'value',
+        'transport_killer_count',
+        'transport_killer_value',
+        'transport_driver_count',
+        'transport_driver_value',
     ];
 
     static public

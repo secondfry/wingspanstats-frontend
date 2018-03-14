@@ -28,12 +28,22 @@ export default {
   mutations: {
     [month_events.CACHE_HIT] (state, data) {
       for (let category of Object.keys(data)) {
+        if (!state[category]) {
+          // We don't display some categories on client
+          continue;
+        }
+
         state[category].data = data[category];
       }
       state.isLoaded = true;
     },
     [month_events.LOAD_SUCCESS] (state, data) {
       for (let category of Object.keys(data)) {
+        if (!state[category]) {
+          // We don't display some categories on client
+          continue;
+        }
+
         state[category].data = data[category];
       }
       state.isLoaded = true;

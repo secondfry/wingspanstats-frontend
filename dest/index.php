@@ -251,4 +251,14 @@ $app -> get(
     }
 );
 
+/** /api/achievements/ */
+$app -> get(
+    '/api/achievements/',
+    function (Request $request, Response $response, array $args) {
+        $data = MDB ::get() -> pilot_achievements -> find(['achievements' => ['$exists' => True]])
+                                                  -> toArray();
+        return $response -> withJson($data);
+    }
+);
+
 $app -> run();

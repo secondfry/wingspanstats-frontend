@@ -6,7 +6,7 @@
       navigate (e) {
         e.preventDefault();
         this.$router.push({
-          name: 'root'
+          name: e.target.dataset.name
         });
       },
       reset (e) {
@@ -26,7 +26,12 @@
   <div>
     <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
       <div class="container">
-        <a class="navbar-brand mr-auto" href="/" @click="navigate">Wingspan Delivery Services Statistics</a>
+        <a class="navbar-brand" href="/" data-name="root" @click="navigate">Wingspan Delivery Services Statistics</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-item nav-link" href="/achievements" data-name="achievements" @click="navigate">Achievements</a>
+          </li>
+        </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-item nav-link" href="#" @click="reset">Reset</a>

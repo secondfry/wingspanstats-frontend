@@ -10,6 +10,8 @@
           case 'damage': return (this.pilot.value / Math.pow(10, 6)).toFixed(2) + 'M CRPs';
           case 'dedication': return this.pilot.value + ' dedication index';
           case 'diversity': return this.pilot.value + ' diversity index';
+          case 'points': return this.pilot.value + ' ZPs';
+          default: return this.pilot.value;
         }
       },
       flagType () {

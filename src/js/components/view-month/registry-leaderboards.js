@@ -81,7 +81,8 @@ export default {
   'capital_driver_value': {name: 'Capitals Voyage', empty: '', data: []},
   'capital_killer_count': {name: 'Capitals Graveyard', empty: '...they were not SHEILD', data: []},
   'capital_killer_value': {name: 'Capitals Graveyard', empty: '', data: []},
+  'damage': {name: '<abbr title="Customer\'s Resistance Points (also known as damage done)">CRPs</abbr>', empty: 'Resistance will be suppressed', data: []},
+  'zkb_points': {name: '<abbr title="zKillboard Points">ZPs</abbr>', empty: 'Also known as the best and the only proper pilot skill evaluation', data: []},
   'count': {name: 'Deliveries', empty: 'NO DELIVERIES? WHAT ARE WE? GOONS?', data: []},
-  'damage': {name: '<abbr title="Customer\'s Resistance Points">CRP</abbr>', empty: 'Resistance will be suppressed', data: []},
   'value': {name: 'Da Real Pirate', empty: 'Show me da booty', data: []}
 }

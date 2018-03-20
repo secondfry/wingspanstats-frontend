@@ -124,7 +124,7 @@
     <div class="month-leaderboards">
       <leaderboard type="count" title="Deliveries"></leaderboard>
       <leaderboard type="value" title="Estimate"></leaderboard>
-      <leaderboard type="damage"></leaderboard>
+      <leaderboard type="zkb_points"></leaderboard>
       <leaderboard type="solo_count" title="Solo"></leaderboard>
     </div>
     <div v-if="dedicated" class="text-center my-3">

@@ -182,6 +182,7 @@ class Registry {
         'transport_killer_value',
         'transport_driver_count',
         'transport_driver_value',
+        'zkb_points',
     ];
 
     static public

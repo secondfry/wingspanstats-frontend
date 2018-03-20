@@ -160,7 +160,7 @@
             category: this.type
           }
         });
-      }
+      },
     },
     components: {
       LeaderboardTicker,
@@ -181,7 +181,7 @@
         <a :href="url" @click="navigate">Overview ({{ typeArray[typeArray.length - 1] }})</a>
       </small>
     </div>
-    <div :class="['leaderboard-places', { tracking: index === 3 }]" v-for="(list, index) of places" v-if="list.length">
+    <div :class="[{ tracking: index === '4' }, 'leaderboard-places']" v-for="(list, index) of places" v-if="list.length">
       <div :class="['place', getListSizeClass(list)]" v-for="pilot in list">
         <div :class="['h-100', getPlaceClass(pilot.place)]"></div>
         <pilot-icon :id="pilot.character_id" :type="getListSize(list)" :category="type"></pilot-icon>

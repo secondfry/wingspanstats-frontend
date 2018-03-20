@@ -261,4 +261,16 @@ $app -> get(
     }
 );
 
+/** /api/sso/ */
+$app -> post(
+    '/api/sso/',
+    function (Request $request, Response $response, array $args) {
+        $data = $request -> getParsedBody();
+        $url = 'https://login.eveonline.com/oauth/verify';
+        $headers = array('Authorization' => 'Bearer ' . $data['token']);
+        $res = Requests::get($url, $headers);
+        return $response -> write($res -> body);
+    }
+);
+
 $app -> run();

@@ -1,8 +1,16 @@
 <script>
+  import { mapActions, mapGetters, mapState } from 'vuex';
+
   import ViewAllTime from '../components/view-alltime.vue'
 
   export default {
     methods: {
+      ...mapActions([
+        'loadUserId',
+      ]),
+      ...mapGetters([
+        'hasUser',
+      ]),
       navigate (e) {
         e.preventDefault();
         this.$router.push({
@@ -10,11 +18,20 @@
         });
       },
       reset (e) {
-        return localforage.clear().then(() => {
-            location.reload();
-          }
-        )
+        e.preventDefault();
+        return localforage.clear()
+          .then(() => {
+              location.reload();
+            }
+          )
+      },
+      track (e) {
+        e.preventDefault();
+        location.href = 'https://login.eveonline.com/oauth/authorize/?response_type=token&client_id=51c4a940a2464ea98df98c8f0dc1bf71&redirect_uri=https://wds-stats.secondfry.ru/track/';
       }
+    },
+    created () {
+      this.loadUserId();
     },
     components: {
       ViewAllTime
@@ -24,17 +41,18 @@
 
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="/" data-name="root" @click="navigate">Wingspan Delivery Services Statistics</a>
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+        <ul class="navbar-nav w-100">
+          <li class="nav-item mr-auto">
             <a class="nav-item nav-link" href="/achievements" data-name="achievements" @click="navigate">Achievements</a>
           </li>
-        </ul>
-        <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-item nav-link" href="#" @click="reset">Reset</a>
+          </li>
+          <li class="nav-item" v-if="!hasUser()">
+            <a class="nav-item nav-link" href="#" @click="track">Track your character</a>
           </li>
         </ul>
       </div>

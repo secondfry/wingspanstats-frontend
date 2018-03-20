@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import PageAchievements from './pages/achievements.vue'
 import PageIndex from './pages/index.vue'
 import PageCategory from './pages/category.vue'
+import SSO from './pages/sso.vue'
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/achievements',
     component: PageAchievements,
     name: 'achievements',
+  },
+  {
+    path: '/track/',
+    component: SSO,
+    name: 'sso',
   }
 ];
 

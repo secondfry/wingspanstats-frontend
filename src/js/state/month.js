@@ -3,11 +3,11 @@ import axios from 'axios'
 import default_state from '../components/view-month/registry-leaderboards'
 const real_default_state = JSON.parse(JSON.stringify(default_state));
 
-const month_events = {
+const events = {
   CACHE_HIT: 'MONTH_CACHE_HIT',
   LOAD_SUCCESS: 'MONTH_LOAD_SUCCESS',
   LOAD_FAIL: 'MONTH_LOAD_FAIL',
-  REQUEST: 'MONTH_REQUEST'
+  REQUEST: 'MONTH_REQUEST',
 };
 
 export default {
@@ -26,7 +26,7 @@ export default {
     }
   },
   mutations: {
-    [month_events.CACHE_HIT] (state, data) {
+    [events.CACHE_HIT] (state, data) {
       for (let category of Object.keys(data)) {
         if (!state[category]) {
           // We don't display some categories on client
@@ -37,7 +37,7 @@ export default {
       }
       state.isLoaded = true;
     },
-    [month_events.LOAD_SUCCESS] (state, data) {
+    [events.LOAD_SUCCESS] (state, data) {
       for (let category of Object.keys(data)) {
         if (!state[category]) {
           // We don't display some categories on client
@@ -54,7 +54,7 @@ export default {
       return this._vm.$getItem('month-' + year + '-' + month)
         .then(data => {
           if (data) {
-            commit(month_events.CACHE_HIT, data);
+            commit(events.CACHE_HIT, data);
             return true;
           } else {
             dispatch('loadMonth', { year, month });
@@ -73,13 +73,13 @@ export default {
         .catch(console.log.bind(console));
     },
     loadMonth ({ commit }, { year, month }) {
-      commit(month_events.REQUEST);
+      commit(events.REQUEST);
       return axios
         .get('/api/month/' + year + '/' + month + '/')
         .then(res => res.data)
         .then(data => {
           this._vm.$setItem('month-' + year + '-' + month, data);
-          commit(month_events.LOAD_SUCCESS, data);
+          commit(events.LOAD_SUCCESS, data);
         })
         .catch(console.log.bind(console))
     }

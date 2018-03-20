@@ -5,6 +5,7 @@ import alltime from './state/alltime'
 import category from './state/category'
 import month from './state/month'
 import pilots from './state/pilots'
+import user from './state/user'
 
 const store = new Vuex.Store({
   modules: {
@@ -12,7 +13,8 @@ const store = new Vuex.Store({
     alltime,
     category,
     month,
-    pilots
+    pilots,
+    user,
   }
 });
 

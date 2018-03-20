@@ -18,12 +18,17 @@
         iconPlane,
         iconSwords,
         leaderboards: realLeaderboards,
+        userPlace: null,
       }
     },
     computed: {
+      ...mapState({
+        userId: state => state.user.user.id,
+      }),
       ...mapGetters([
         'getPilotName',
-        'getCategory'
+        'getCategory',
+        'hasUser',
       ]),
       typeArray () {
         return this.type.split('_');
@@ -84,22 +89,35 @@
 
         return data.empty;
       },
-      data () {
+      places () {
+        this.userPlace = null;
+
         const ret = {1: [], 2: [], 3: []};
         const tmp = this.getCategory(this.type);
 
-        if (!tmp) {
+        if (!tmp.length) {
           return ret;
         }
 
+        if (this.hasUser) {
+          ret[4] = [];
+        }
+
         for (let item of tmp) {
-          if (item.place > 3) {
+          if (item.place > 3 && (!this.hasUser || this.userPlace)) {
             break;
           }
 
-          ret[item.place].push(item);
+          if (this.userId === item.character_id) {
+            this.userPlace = item.place;
+            ret[4].push(item);
+          }
+
+          if (item.place < 4) {
+            ret[item.place].push(item);
+          }
         }
-        
+
         return ret;
       },
       url () {
@@ -112,7 +130,7 @@
           case 1: return 'place-gold';
           case 2: return 'place-silver';
           case 3: return 'place-bronze';
-          default: return 'place-wingspan';
+          case 4: return 'place-wingspan';
         }
       },
       getListSizeClass (list) {
@@ -127,8 +145,8 @@
           default: return 'small';
         }
       },
-      checkData (data) {
-        if (data['1'].length) {
+      checkPlaces (places) {
+        if (places['1'].length) {
           return true;
         }
 
@@ -152,7 +170,7 @@
 </script>
 
 <template>
-  <div class="leaderboard-wrap">
+  <div :class="[{ tracking: hasUser }, 'leaderboard-wrap']">
     <div class="leaderboard-actions">
       <div class="font-weight-bold" v-html="_title"></div>
       <small>
@@ -163,21 +181,20 @@
         <a :href="url" @click="navigate">Overview ({{ typeArray[typeArray.length - 1] }})</a>
       </small>
     </div>
-    <div class="leaderboard-places" v-for="list in data" v-if="list.length">
+    <div :class="['leaderboard-places', { tracking: index === 3 }]" v-for="(list, index) of places" v-if="list.length">
       <div :class="['place', getListSizeClass(list)]" v-for="pilot in list">
         <div :class="['h-100', getPlaceClass(pilot.place)]"></div>
         <pilot-icon :id="pilot.character_id" :type="getListSize(list)" :category="type"></pilot-icon>
         <a class="place-name ml-2">
           {{ getPilotName(pilot.character_id) }}
-          <br v-if="list.length == 1">
-          <span v-if="list.length != 1">–</span>
+          <br v-if="list.length == 1 || hasUser">
+          <span v-if="list.length != 1 && !hasUser">–</span>
           <leaderboard-ticker :type="type" :pilot="pilot"></leaderboard-ticker>
         </a>
       </div>
     </div>
-    <div class="leaderboard-message text-center" v-if="!checkData(data)">{{ text }}</div>
+    <div class="leaderboard-message text-center" v-if="!checkPlaces(places)">{{ text }}</div>
   </div>
-
 </template>
 
 <style lang="scss">
@@ -185,8 +202,12 @@
     display: grid;
 
     @include media-breakpoint-up(md) {
-      grid-template-columns: 1fr 3fr 3fr 3fr;
+      grid-template: "text first second third" / 1fr 3fr 3fr 3fr;
       grid-column-gap: 0.5em;
+
+      &.tracking {
+        grid-template: "text first second third tracking" / 4fr 9fr 9fr 9fr 9fr;
+      }
     }
   }
   .leaderboard-ship-tip {
@@ -202,6 +223,12 @@
   .leaderboard-places {
     display: grid;
     grid-row-gap: 0.5em;
+
+    &.tracking {
+      @include media-breakpoint-up(md) {
+        grid-area: tracking;
+      }
+    }
   }
   .place {
     display: grid;
@@ -233,7 +260,7 @@
     align-items: center;
 
     @include media-breakpoint-up(md) {
-      grid-area: 1 / 2 / 1 / 5;
+      grid-area: 1 / 2 / 1 / 10;
     }
   }
 </style>

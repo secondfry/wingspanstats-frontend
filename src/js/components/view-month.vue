@@ -29,7 +29,7 @@
       }),
       ...mapGetters([
         'getFirstInCategory',
-        'getPilotName'
+        'getPilotName',
       ]),
       dedicated () {
         return this.getFirstInCategory('dedication')

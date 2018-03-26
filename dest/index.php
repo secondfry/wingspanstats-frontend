@@ -175,6 +175,8 @@ class Registry {
         't3d_driver_value',
         't3d_killer_count',
         't3d_killer_value',
+        'trash_killer_count',
+        'trash_killer_value',
         'thera_count',
         'thera_value',
         'value',

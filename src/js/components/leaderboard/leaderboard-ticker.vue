@@ -1,10 +1,10 @@
 <script>
 
   export default {
-    props: ['pilot', 'type'],
+    props: ['pilot', 'category'],
     computed: {
       display () {
-        switch (this.flagType) {
+        switch (this.categoryArr) {
           case 'count': return this.pilot.value + ' deliveries';
           case 'value': return (this.pilot.value / Math.pow(10, 9)).toFixed(2) + 'B ISK';
           case 'damage': return (this.pilot.value / Math.pow(10, 6)).toFixed(2) + 'M CRPs';
@@ -14,8 +14,8 @@
           default: return this.pilot.value;
         }
       },
-      flagType () {
-        return this.type.split('_').pop()
+      categoryArr () {
+        return this.category.split('_').pop()
       }
     }
   }

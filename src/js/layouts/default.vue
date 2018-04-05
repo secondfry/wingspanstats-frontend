@@ -1,6 +1,7 @@
 <script>
   import { mapActions, mapGetters, mapState } from 'vuex';
 
+  import Glyphicons from './power-threads-glyphicons.vue'
   import ViewAllTime from '../components/view-alltime.vue'
 
   export default {

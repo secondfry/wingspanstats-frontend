@@ -7,12 +7,19 @@ const events = {
   CACHE_HIT: 'MONTH_CACHE_HIT',
   LOAD_SUCCESS: 'MONTH_LOAD_SUCCESS',
   LOAD_FAIL: 'MONTH_LOAD_FAIL',
+  PATCH: 'MONTH_PATCH',
+  FINISHER: 'MONTH_FINISHER',
   REQUEST: 'MONTH_REQUEST',
 };
 
 export default {
   state: {
     ...real_default_state,
+    summary: {
+      count: null,
+      damage: null,
+      value: null
+    },
     isLoaded: false
   },
   getters: {
@@ -26,26 +33,42 @@ export default {
     }
   },
   mutations: {
+    [events.PATCH] (state, { category, data }) {
+      if (!state[category]) {
+        // We don't display some categories on client
+        return;
+      }
+
+      state[category].data = data;
+    },
+    [events.FINISHER] (state, data) {
+      state.summary = data.summary;
+      state.isLoaded = true;
+    },
     [events.CACHE_HIT] (state, data) {
       for (let category of Object.keys(data)) {
-        if (!state[category]) {
+        if (!state[category] || category === 'summary') {
           // We don't display some categories on client
           continue;
         }
 
-        state[category].data = data[category];
+        requestAnimationFrame(() => {
+          state[category].data = data[category];
+        });
       }
+      state.summary = data.summary;
       state.isLoaded = true;
     },
     [events.LOAD_SUCCESS] (state, data) {
       for (let category of Object.keys(data)) {
-        if (!state[category]) {
+        if (!state[category] || category === 'summary') {
           // We don't display some categories on client
           continue;
         }
 
         state[category].data = data[category];
       }
+      state.summary = data.summary;
       state.isLoaded = true;
     },
   },
@@ -54,7 +77,7 @@ export default {
       return this._vm.$getItem('month-' + year + '-' + month)
         .then(data => {
           if (data) {
-            commit(events.CACHE_HIT, data);
+            dispatch('startCascade', data);
             return true;
           } else {
             dispatch('loadMonth', { year, month });
@@ -72,16 +95,30 @@ export default {
         })
         .catch(console.log.bind(console));
     },
-    loadMonth ({ commit }, { year, month }) {
+    loadMonth ({ commit, dispatch }, { year, month }) {
       commit(events.REQUEST);
       return axios
         .get('/api/month/' + year + '/' + month + '/')
         .then(res => res.data)
         .then(data => {
           this._vm.$setItem('month-' + year + '-' + month, data);
-          commit(events.LOAD_SUCCESS, data);
+          dispatch('startCascade', data);
         })
         .catch(console.log.bind(console))
-    }
+    },
+    startCascade ({ commit, dispatch }, data) {
+      for (let category of Object.keys(data)) {
+        if (category === 'summary') {
+          continue;
+        }
+
+        dispatch('applyCategory', { category, data: data[category] });
+      }
+
+      commit(events.FINISHER, data);
+    },
+    applyCategory ({ commit }, { category, data }) {
+      commit(events.PATCH, { category, data });
+    },
   }
 }

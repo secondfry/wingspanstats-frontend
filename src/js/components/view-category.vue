@@ -6,7 +6,7 @@
   export default {
     computed: {
       ...mapState({
-        arePilotsLoaded: state => state.pilots.isLoaded,
+        arePilotNamesLoaded: state => state.pilot_names.isLoaded,
         pilots: function (state) { return state.category[this.type].data },
       }),
       ...mapGetters([
@@ -22,14 +22,14 @@
     methods: {
       ...mapActions([
         'loadCategoryFast',
-        'loadPilotsFast',
+        'loadPilotNamesFast',
       ])
     },
     created () {
       this.loadCategoryFast({ category: this.type });
 
-      if (!this.arePilotsLoaded) {
-        this.loadPilotsFast();
+      if (!this.arePilotNamesLoaded) {
+        this.loadPilotNamesFast();
       }
     },
     components: {}

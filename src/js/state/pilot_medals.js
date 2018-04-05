@@ -1,10 +1,11 @@
 import axios from 'axios'
+import Vue from 'vue'
 
 const events = {
-  CACHE_HIT: 'PILOT_NAMES_CACHE_HIT',
-  LOAD_SUCCESS: 'PILOT_NAMES_LOAD_SUCCESS',
-  LOAD_FAIL: 'PILOT_NAMES_LOAD_FAIL',
-  REQUEST: 'PILOT_NAMES_REQUEST'
+  CACHE_HIT: 'PILOT_MEDALS_CACHE_HIT',
+  LOAD_SUCCESS: 'PILOT_MEDALS_LOAD_SUCCESS',
+  LOAD_FAIL: 'PILOT_MEDALS_LOAD_FAIL',
+  REQUEST: 'PILOT_MEDALS_REQUEST'
 };
 
 export default {
@@ -13,8 +14,12 @@ export default {
     isLoaded: false,
   },
   getters: {
-    getPilotName: state => id => {
-      try { return state.data[id].name }
+    getPilotMedals: state => id => {
+      try { return state.data[id].medals }
+      catch (e) {}
+    },
+    getPilotCategoryMedals: (state, getters) => (id, category) => {
+      try { return getters.getPilotMedals(id)[category]; }
       catch (e) {}
     }
   },
@@ -29,22 +34,22 @@ export default {
     },
   },
   actions: {
-    loadPilotNamesFast ({ commit, dispatch }) {
-      this._vm.$getItem('pilot_names')
+    loadPilotMedalsFast ({ commit, dispatch }) {
+      this._vm.$getItem('pilot_medals')
         .then(data => {
           if (data) {
             commit(events.CACHE_HIT, data);
           }
         })
         .then(() => {
-          dispatch('loadPilotNames');
+          dispatch('loadPilotMedals');
         })
         .catch(console.log.bind(console));
     },
-    loadPilotNames ({ commit }) {
+    loadPilotMedals ({ commit }) {
       commit(events.REQUEST);
       return axios
-        .get('/api/pilot/names/')
+        .get('/api/pilot/medals/')
         .then(res => {
           const ret = {};
           for (let pilot of res.data) {
@@ -53,7 +58,7 @@ export default {
           return ret
         })
         .then(data => {
-          this._vm.$setItem('pilot_names', data);
+          this._vm.$setItem('pilot_medals', data);
           commit(events.LOAD_SUCCESS, data);
         })
         .catch(console.log.bind(console))

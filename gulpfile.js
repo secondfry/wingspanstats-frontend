@@ -72,7 +72,7 @@ gulp.task('css', () => {
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dest/css/'));
-})
+});
 
 gulp.task('minify-desktop', () => {
   return gulp.src('./dest/css/*-desktop.css')
@@ -87,7 +87,7 @@ gulp.task('minify-desktop', () => {
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dest/css/'));
-})
+});
 
 gulp.task('sass:watch', () => {
   gulp.watch([

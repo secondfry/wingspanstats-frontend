@@ -5,8 +5,9 @@
   import { EventBus } from '../event-bus'
 
   import Leaderboard from './leaderboard.vue'
+  import MonthSummary from './view-month/summary.vue'
   import NavigationBar from './navigation-bar.vue'
-  import PilotIcon from './pilot-icon.vue'
+  import PilotIconWithMedals from './pilot-icon-with-medals.vue'
   import ShipIcon from './ship-icon.vue'
   import WeaponIcon from './weapon-icon.vue'
 
@@ -25,7 +26,9 @@
     computed: {
       ...mapState({
         isMonthLoaded: state => state.month.isLoaded,
-        arePilotsLoaded: state => state.pilots.isLoaded,
+        arePilotMedalsLoaded: state => state.pilot_medals.isLoaded,
+        arePilotNamesLoaded: state => state.pilot_names.isLoaded,
+        summary: state => state.month.summary,
       }),
       ...mapGetters([
         'getFirstInCategory',
@@ -75,7 +78,8 @@
       ...mapActions([
         'loadMonthCache',
         'loadMonthFast',
-        'loadPilotsFast',
+        'loadPilotMedalsFast',
+        'loadPilotNamesFast',
       ]),
       setMonth (year, month) {
         this.monthData = Number(month);
@@ -92,8 +96,12 @@
         this.loadMonthFast(this.date);
       }
 
-      if (!this.arePilotsLoaded) {
-        this.loadPilotsFast();
+      if (!this.arePilotNamesLoaded) {
+        this.loadPilotNamesFast();
+      }
+
+      if (!this.arePilotMedalsLoaded) {
+        this.loadPilotMedalsFast();
       }
 
       EventBus.$on('month', ({ year, month }) => {
@@ -110,8 +118,9 @@
     },
     components: {
       Leaderboard,
+      MonthSummary,
       NavigationBar,
-      PilotIcon,
+      PilotIconWithMedals,
       ShipIcon,
       WeaponIcon
     },
@@ -121,6 +130,7 @@
 <template>
   <div>
     <div class="font-weight-bold text-center my-3">{{ monthName }}, YC1{{ yearShort }}</div>
+    <month-summary></month-summary>
     <div class="month-leaderboards">
       <leaderboard type="count" title="Deliveries"></leaderboard>
       <leaderboard type="value" title="Estimate"></leaderboard>
@@ -128,14 +138,14 @@
       <leaderboard type="solo_count" title="Solo"></leaderboard>
     </div>
     <div v-if="dedicated" class="text-center my-3">
-      <pilot-icon :id="dedicated.character_id" name="swaglord"></pilot-icon>
+      <pilot-icon-with-medals :id="dedicated.character_id" category="dedication"></pilot-icon-with-medals>
       {{ getPilotName(dedicated.character_id) }} | Most dedicated pilot
       <span class="d-none d-md-inline">|</span><br class="d-block d-md-none">
       {{ dedicated.value }} deliveries on
       <ship-icon :id="dedicated.match.ship_type_id"></ship-icon><weapon-icon :id="dedicated.match.weapon_type_id"></weapon-icon>
     </div>
     <div v-if="diverse" class="text-center my-3">
-      <pilot-icon :id="diverse.character_id"></pilot-icon>
+      <pilot-icon-with-medals :id="diverse.character_id" category="diversity"></pilot-icon-with-medals>
       {{ getPilotName(diverse.character_id) }} | Most diverse pilot
       <span class="d-none d-md-inline">|</span><br class="d-block d-md-none">
       {{ diverse.value }} diversity index<br>

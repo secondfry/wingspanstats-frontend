@@ -1,8 +1,7 @@
 <script>
   import { mapActions, mapGetters, mapState } from 'vuex'
 
-  import PilotIcon from './pilot-icon.vue'
-  import LeaderboardTicker from './leaderboard/leaderboard-ticker.vue'
+  import LeaderboardPilot from './leaderboard/leaderboard-pilot.vue'
 
   import iconPlane from '../../files/plane.svg'
   import iconGrave from '../../files/grave.svg'
@@ -125,26 +124,6 @@
       }
     },
     methods: {
-      getPlaceClass (place) {
-        switch (place) {
-          case 1: return 'place-gold';
-          case 2: return 'place-silver';
-          case 3: return 'place-bronze';
-          case 4: return 'place-wingspan';
-        }
-      },
-      getListSizeClass (list) {
-        switch (list.length) {
-          case 1: return 'place-large';
-          default: return 'place-small';
-        }
-      },
-      getListSize (list) {
-        switch (list.length) {
-          case 1: return 'large';
-          default: return 'small';
-        }
-      },
       checkPlaces (places) {
         if (places['1'].length) {
           return true;
@@ -163,8 +142,7 @@
       },
     },
     components: {
-      LeaderboardTicker,
-      PilotIcon
+      LeaderboardPilot,
     }
   }
 </script>
@@ -182,16 +160,7 @@
       </small>
     </div>
     <div :class="[{ tracking: index === '4' }, 'leaderboard-places']" v-for="(list, index) of places" v-if="list.length">
-      <div :class="['place', getListSizeClass(list)]" v-for="pilot in list">
-        <div :class="['h-100', getPlaceClass(pilot.place)]"></div>
-        <pilot-icon :id="pilot.character_id" :type="getListSize(list)" :category="type"></pilot-icon>
-        <a class="place-name ml-2">
-          {{ getPilotName(pilot.character_id) }}
-          <br v-if="list.length == 1 || hasUser">
-          <span v-if="list.length != 1 && !hasUser">–</span>
-          <leaderboard-ticker :type="type" :pilot="pilot"></leaderboard-ticker>
-        </a>
-      </div>
+      <leaderboard-pilot :pilot="pilot" :listLength="list.length" :category="type" v-for="pilot in list" :key="pilot.character_id"></leaderboard-pilot>
     </div>
     <div class="leaderboard-message text-center" v-if="!checkPlaces(places)">{{ text }}</div>
   </div>

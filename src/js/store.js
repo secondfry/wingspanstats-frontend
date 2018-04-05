@@ -4,7 +4,8 @@ import achievements from './state/achievements'
 import alltime from './state/alltime'
 import category from './state/category'
 import month from './state/month'
-import pilots from './state/pilots'
+import pilot_medals from './state/pilot_medals'
+import pilot_names from './state/pilot_names'
 import user from './state/user'
 
 const store = new Vuex.Store({
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
     alltime,
     category,
     month,
-    pilots,
+    pilot_medals,
+    pilot_names,
     user,
   }
 });

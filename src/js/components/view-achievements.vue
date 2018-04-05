@@ -13,7 +13,7 @@
     },
     computed: {
       ...mapState({
-        arePilotsLoaded: state => state.pilots.isLoaded,
+        arePilotNamesLoaded: state => state.pilot_names.isLoaded,
         isAchievementsLoaded: state => state.achievements.isLoaded,
         state: state => state.achievements.data,
       }),
@@ -34,7 +34,7 @@
     methods: {
       ...mapActions([
         'loadAchievementsFast',
-        'loadPilotsFast',
+        'loadPilotNamesFast',
       ]),
       makeZkbLink (id) {
         return 'https://zkillboard.com/kill/' + id + '/';
@@ -45,8 +45,8 @@
         this.loadAchievementsFast();
       }
 
-      if (!this.arePilotsLoaded) {
-        this.loadPilotsFast();
+      if (!this.arePilotNamesLoaded) {
+        this.loadPilotNamesFast();
       }
     },
     components: {}
@@ -70,7 +70,7 @@
           <tr v-for="line of achievement.data">
             <td>{{ getPilotName(line.character_id) }}</td>
             <td>{{ line.killmail.killmail_time }}</td>
-            <td><a :href="makeZkbLink(line.killmail._id)">Zkillboard</a></td>
+            <td><a :href="makeZkbLink(line.killmail._id)">zKillboard</a></td>
           </tr>
         </tbody>
       </table>

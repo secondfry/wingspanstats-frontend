@@ -199,6 +199,9 @@ class Registry {
                                                         -> setMonth($month)
                                                         -> get();
         }
+        $ret['summary'] = MDB ::get()
+                              -> selectCollection('summary')
+                              -> findOne(['_id' => sprintf('%d%02d', $year, $month)]);
         return $ret;
     }
 }
@@ -248,12 +251,22 @@ $app -> get(
     }
 );
 
-/** /api/pilots/ */
+/** /api/pilot/names/ */
 $app -> get(
-    '/api/pilots/',
+    '/api/pilot/names/',
     function (Request $request, Response $response, array $args) {
         $data = MDB ::get() -> pilot_names -> find()
                                            -> toArray();
+        return $response -> withJson($data);
+    }
+);
+
+/** /api/pilot/medals/ */
+$app -> get(
+    '/api/pilot/medals/',
+    function (Request $request, Response $response, array $args) {
+        $data = MDB ::get() -> pilot_medals -> find()
+                                            -> toArray();
         return $response -> withJson($data);
     }
 );

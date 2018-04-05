@@ -6,12 +6,15 @@
  */
 
 /* Base styles for the element that has a tooltip */
+.smpl-tt,
 abbr {
   position: relative;
   cursor: pointer;
 }
 
 /* Base styles for the entire tooltip */
+.smpl-tt:before,
+.smpl-tt:after,
 abbr:before,
 abbr:after {
   position: absolute;
@@ -38,6 +41,8 @@ abbr:after {
 }
 
 /* Show the entire tooltip on hover and focus */
+.smpl-tt:hover:before,
+.smpl-tt:hover:after,
 abbr:hover:before,
 abbr:hover:after {
   visibility: visible;
@@ -47,6 +52,7 @@ abbr:hover:after {
 }
 
 /* Base styles for the tooltip's directional arrow */
+.smpl-tt:before,
 abbr:before {
   z-index: 1001;
   border: 6px solid transparent;
@@ -55,6 +61,7 @@ abbr:before {
 }
 
 /* Base styles for the tooltip's content area */
+.smpl-tt:after,
 abbr:after {
   z-index: 1000;
   padding: 8px;
@@ -70,6 +77,8 @@ abbr:after {
 /* Directions */
 
 /* Top (default) */
+.smpl-tt:before,
+.smpl-tt:after,
 abbr:before,
 abbr:after,
 .tt-top:before,
@@ -78,6 +87,7 @@ abbr:after,
   left: 50%;
 }
 
+.smpl-tt:before,
 abbr:before,
 .tt-top:before {
   margin-left: -6px;
@@ -87,11 +97,16 @@ abbr:before,
 }
 
 /* Horizontally align top/bottom tooltips */
+.smpl-tt:after,
 abbr:after,
 .tt-top:after {
   margin-left: -80px;
 }
 
+.smpl-tt:hover:before,
+.smpl-tt:hover:after,
+.smpl-tt:focus:before,
+.smpl-tt:focus:after,
 abbr:hover:before,
 abbr:hover:after,
 abbr:focus:before,

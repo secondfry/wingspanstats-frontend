@@ -199,30 +199,6 @@
       }
     }
   }
-  .place {
-    display: grid;
-    align-items: center;
-
-    &.place-small {
-      grid-template-columns: 0.5em 32px auto;
-    }
-    &.place-large {
-      grid-template-columns: 0.5em 64px auto;
-      min-height: 72px;
-    }
-  }
-  .place-gold {
-    background: $color-first;
-  }
-  .place-silver {
-    background: $color-second;
-  }
-  .place-bronze {
-    background: $color-third;
-  }
-  .place-wingspan {
-    background: $color-wingspan;
-  }
   .leaderboard-message {
     grid-area: 2 / 1;
     display: grid;

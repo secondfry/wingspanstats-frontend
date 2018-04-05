@@ -67,13 +67,42 @@
     <div :class="['h-100', placeClass]"></div>
     <pilot-icon-with-medals :id="pilot.character_id" :size="size" :category="category"></pilot-icon-with-medals>
     <a class="place-name ml-2">
+      <div>
+        <small>#{{ pilot.place }} <small><span :class="glyphClass"></span> {{ change }}</small></small>
+      </div>
       {{ getPilotName(pilot.character_id) }}
       <br v-if="size === 'large' || hasUser">
       <span v-if="size === 'small' && !hasUser">–</span>
       <leaderboard-ticker :category="category" :pilot="pilot"></leaderboard-ticker>
-      <div>
-        Place: #{{ pilot.place }} <small><span :class="glyphClass"></span> {{ change }}</small>
-      </div>
     </a>
   </div>
 </template>
+
+<style lang="scss">
+  .place {
+    display: grid;
+    align-items: center;
+    line-height: 1.4;
+
+    &.place-small {
+      grid-template-columns: 0.5em 32px auto;
+      line-height: 1.2;
+    }
+    &.place-large {
+      grid-template-columns: 0.5em 64px auto;
+      min-height: 72px;
+    }
+  }
+  .place-gold {
+    background: $color-first;
+  }
+  .place-silver {
+    background: $color-second;
+  }
+  .place-bronze {
+    background: $color-third;
+  }
+  .place-wingspan {
+    background: $color-wingspan;
+  }
+</style>

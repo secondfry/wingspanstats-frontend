@@ -38,10 +38,10 @@
   .summary-month-wrap {
     display: grid;
     grid-template-columns: max-content;
-    grid-auto-columns: 0.5em max-content;
+    grid-auto-columns: 0.25em max-content;
     grid-auto-flow: column;
     justify-content: center;
     align-items: center;
-    grid-column-gap: 1em;
+    grid-column-gap: 0.5em;
   }
 </style>

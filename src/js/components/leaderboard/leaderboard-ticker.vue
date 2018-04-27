@@ -1,5 +1,4 @@
 <script>
-
   export default {
     props: ['pilot', 'category'],
     computed: {

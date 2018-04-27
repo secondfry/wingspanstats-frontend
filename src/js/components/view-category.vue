@@ -1,6 +1,8 @@
 <script>
   import { mapActions, mapGetters, mapState } from 'vuex'
 
+  import LeaderboardTicker from './leaderboard/leaderboard-ticker.vue';
+
   import leaderboards from '../components/view-month/registry-leaderboards'
 
   export default {
@@ -32,7 +34,9 @@
         this.loadPilotNamesFast();
       }
     },
-    components: {}
+    components: {
+      LeaderboardTicker
+    }
   }
 </script>
 
@@ -41,13 +45,15 @@
     <div class="font-weight-bold text-center my-3" v-html="title"></div>
     <table class="table table-sm">
       <thead class="thead-dark">
+        <th>##</th>
         <th>Pilot</th>
         <th>Value</th>
       </thead>
       <tbody>
-        <tr v-for="pilot in pilots" :key="pilot.character_id">
+        <tr v-for="pilot, index in pilots" :key="pilot.character_id">
+          <td>{{ index + 1 }}</td>
           <td>{{ getPilotName(pilot.character_id) }}</td>
-          <td>{{ pilot.value }}</td>
+          <td><leaderboard-ticker :pilot="pilot" :category="type"></leaderboard-ticker></td>
         </tr>
       </tbody>
     </table>

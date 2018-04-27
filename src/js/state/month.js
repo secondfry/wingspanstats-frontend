@@ -12,6 +12,21 @@ const events = {
   REQUEST: 'MONTH_REQUEST',
 };
 
+const processData = (state, data) => {
+  for (let category of Object.keys(data)) {
+    if (!state[category] || category === 'summary') {
+      // We don't display some categories on client
+      continue;
+    }
+
+    requestAnimationFrame(() => {
+      state[category].data = data[category];
+    });
+  }
+  state.summary = data.summary;
+  state.isLoaded = true;
+};
+
 export default {
   state: {
     ...real_default_state,
@@ -46,30 +61,10 @@ export default {
       state.isLoaded = true;
     },
     [events.CACHE_HIT] (state, data) {
-      for (let category of Object.keys(data)) {
-        if (!state[category] || category === 'summary') {
-          // We don't display some categories on client
-          continue;
-        }
-
-        requestAnimationFrame(() => {
-          state[category].data = data[category];
-        });
-      }
-      state.summary = data.summary;
-      state.isLoaded = true;
+      processData(state, data);
     },
     [events.LOAD_SUCCESS] (state, data) {
-      for (let category of Object.keys(data)) {
-        if (!state[category] || category === 'summary') {
-          // We don't display some categories on client
-          continue;
-        }
-
-        state[category].data = data[category];
-      }
-      state.summary = data.summary;
-      state.isLoaded = true;
+      processData(state, data);
     },
   },
   actions: {
@@ -118,7 +113,9 @@ export default {
       commit(events.FINISHER, data);
     },
     applyCategory ({ commit }, { category, data }) {
-      commit(events.PATCH, { category, data });
+      requestAnimationFrame(() => {
+        commit(events.PATCH, { category, data });
+      });
     },
   }
 }

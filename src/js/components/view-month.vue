@@ -133,9 +133,9 @@
     <month-summary></month-summary>
     <div class="month-leaderboards">
       <leaderboard type="value" title="<abbr title='Most ISK destroyed'>Employee of the Month</abbr>"></leaderboard>
-      <leaderboard type="solo_value" title="<abbr title='Most ISK destroyed solo'>Top Lone Enterprising Agent</abbr>"></leaderboard>
+      <leaderboard type="solo-value_value" title="<abbr title='Most ISK destroyed solo'>Top Lone Enterprising Agent</abbr>"></leaderboard>
       <leaderboard type="count" title="Deliveries"></leaderboard>
-      <leaderboard type="solo_count" title="Solo"></leaderboard>
+      <leaderboard type="solo-count_count" title="<abbr title='As it goes by zKillboard\'s solo rules'>Solo</abbr>"></leaderboard>
       <leaderboard type="zkb_points"></leaderboard>
     </div>
     <div v-if="dedicated" class="text-center my-3">

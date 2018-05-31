@@ -5,10 +5,26 @@
     computed: {
       ...mapState({
         isLoaded: state => state.month.isLoaded,
-        value: state => (state.month.summary.value / Math.pow(10, 9)).toFixed(2),
-        count: state => state.month.summary.count,
-        average: state => (state.month.summary.value / state.month.summary.count / Math.pow(10, 6)).toFixed(2),
-        damage: state => (state.month.summary.damage / Math.pow(10, 6)).toFixed(2)
+        value: state => {
+          try {
+            return (state.month.summary.value / Math.pow(10, 9)).toFixed(2)
+          } catch (e) {}
+        },
+        count: state => {
+          try {
+            return state.month.summary.count
+          } catch (e) {}
+        },
+        average: state => {
+          try {
+            return (state.month.summary.value / state.month.summary.count / Math.pow(10, 6)).toFixed(2)
+          } catch (e) {}
+        },
+        damage: state => {
+          try {
+            return (state.month.summary.damage / Math.pow(10, 6)).toFixed(2)
+          } catch (e) {}
+        }
       }),
     },
   }

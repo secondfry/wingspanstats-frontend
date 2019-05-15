@@ -1,7 +1,7 @@
 <?php
 
 class MDB {
-    const DB = 'wingspan_statistics_new';
+    const DB = 'WDS_statistics_v3';
 
     static public
     function get() {
@@ -246,7 +246,7 @@ $app -> get(
 $app -> get(
     '/api/summary/',
     function (Request $request, Response $response, array $args) {
-        $data = MDB ::get() -> summary -> findOne();
+        $data = MDB ::get() -> summary -> findOne(['_id' => 'overall']);
         return $response -> withJson($data);
     }
 );

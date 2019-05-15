@@ -1,20 +1,6 @@
 {
   "plugins": [
-    "syntax-dynamic-import",
-    "transform-object-rest-spread"
-  ],
-  "presets": [
-    ["env", {
-      "modules": false,
-      "targets": {
-        "browsers": [
-          "> 5%",
-          "last 1 Chrome version",
-          "last 1 Firefox version",
-          "last 1 Edge version",
-          "last 1 Safari version"
-        ]
-      }
-    }]
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-syntax-dynamic-import"
   ]
 }

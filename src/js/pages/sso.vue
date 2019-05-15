@@ -20,7 +20,7 @@
       ]),
       fetchCharId () {
         axios({
-          url: 'https://esi.tech.ccp.is/verify/',
+          url: 'https://esi.evetech.net/verify/',
           headers: {
             Authorization: 'Bearer ' + this.sso.access_token,
           },

@@ -67,8 +67,8 @@
     <div :class="['h-100', placeClass]"></div>
     <pilot-icon-with-medals :id="pilot.character_id" :size="size" :category="category"></pilot-icon-with-medals>
     <a class="place-name ml-2">
-      <div>
-        <small>#{{ pilot.place }} <small><span :class="glyphClass"></span> {{ change }}</small></small>
+      <div class="small">
+        #{{ pilot.place }} <small><span :class="glyphClass"></span> {{ change }}</small>
       </div>
       {{ getPilotName(pilot.character_id) }}
       <br v-if="size === 'large' || hasUser">

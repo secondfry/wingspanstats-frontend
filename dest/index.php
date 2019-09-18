@@ -69,9 +69,14 @@ class Category {
 
     private
     function getMonth() {
-        return
-            $this -> getCollection()
-                  -> findOne(['_id' => $this -> getDate()]) -> places;
+        $ret = $this -> getCollection()
+                     -> findOne(['_id' => $this -> getDate()]);
+
+        if (!$ret) {
+            return [];
+        }
+
+        return $ret -> places;
     }
 
     private

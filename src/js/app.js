@@ -12,5 +12,5 @@ Vue.use(VueRouter);
 const app = new Vue({
   router,
   store,
-  el: '#root',
+  el: '#vue-root',
 });

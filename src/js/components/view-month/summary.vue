@@ -55,9 +55,16 @@
     display: grid;
     grid-template-columns: max-content;
     grid-auto-columns: 0.25em max-content;
-    grid-auto-flow: column;
     justify-content: center;
     align-items: center;
     grid-column-gap: 0.5em;
+
+    grid-auto-flow: row;
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+      grid-auto-flow: column;
+      text-align: inherit;
+    }
   }
 </style>

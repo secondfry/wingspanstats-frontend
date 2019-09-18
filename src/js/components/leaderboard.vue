@@ -173,7 +173,7 @@
   .leaderboard-wrap {
     display: grid;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
       grid-template: "text first second third" / 1fr 3fr 3fr 3fr;
       grid-column-gap: 0.5em;
 
@@ -197,7 +197,7 @@
     grid-row-gap: 0.5em;
 
     &.tracking {
-      @include media-breakpoint-up(md) {
+      @include media-breakpoint-up(lg) {
         grid-area: tracking;
       }
     }
@@ -207,7 +207,7 @@
     display: grid;
     align-items: center;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
       grid-area: 1 / 2 / 1 / 10;
     }
   }

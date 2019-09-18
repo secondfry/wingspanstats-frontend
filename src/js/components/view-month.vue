@@ -164,5 +164,13 @@
   .month-leaderboards {
     display: grid;
     grid-row-gap: 0.5em;
+
+    @include media-breakpoint-up(md) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

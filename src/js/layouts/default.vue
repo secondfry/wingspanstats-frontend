@@ -41,7 +41,7 @@
 </script>
 
 <template>
-  <div>
+  <div id="root">
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="/" data-name="root" @click="navigate">Wingspan Delivery Services Statistics</a>

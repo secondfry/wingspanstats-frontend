@@ -10,7 +10,7 @@
   const realLeaderboards = JSON.parse(JSON.stringify(leaderboards));
 
   export default {
-    props: ['type', 'title'],
+    props: ['type', 'title', 'title-description'],
     data () {
       return {
         iconGrave,
@@ -62,7 +62,10 @@
       },
       _title () {
         if (this.title) {
-          return this.title;
+          if (!this.titleDescription)
+            return this.title;
+
+          return `<abbr title="${this.titleDescription}">${this.title}</abbr>`;
         }
 
         if (this.isValueCategory) {

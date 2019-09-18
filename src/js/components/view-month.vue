@@ -132,10 +132,10 @@
     <div class="font-weight-bold text-center my-3">{{ monthName }}, YC1{{ yearShort }}</div>
     <month-summary></month-summary>
     <div class="month-leaderboards">
-      <leaderboard type="value" title="<abbr title='Most ISK destroyed'>Employee of the Month</abbr>"></leaderboard>
-      <leaderboard type="solo-value_value" title="<abbr title='Most ISK destroyed solo'>Top Lone Enterprising Agent</abbr>"></leaderboard>
+      <leaderboard type="value" title="Employee of the Month" title-description="Most ISK destroyed"></leaderboard>
+      <leaderboard type="solo-value_value" title="Top Lone Enterprising Agent" title-description="Most ISK destroyed solo"></leaderboard>
       <leaderboard type="count" title="Deliveries"></leaderboard>
-      <leaderboard type="solo-count_count" title="<abbr title='As it goes by zKillboard\'s solo rules'>Solo</abbr>"></leaderboard>
+      <leaderboard type="solo-count_count" title="Solo" title-description="As it goes by zKillboard's solo rules"></leaderboard>
       <leaderboard type="zkb_points"></leaderboard>
     </div>
     <div v-if="dedicated" class="text-center my-3">

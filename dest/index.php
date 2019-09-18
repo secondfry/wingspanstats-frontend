@@ -229,7 +229,7 @@ $app = new \Slim\App($c);
 
 /** /api/category/:category/:year?/:month?/ */
 $app -> get(
-    '/api/category/{category:[0-9a-z\_]+}/[{year:20[1-2][0-9]}/{month:[0-9]{1,2}}/]',
+    '/api/category/{category:[0-9a-z\_\-]+}/[{year:20[1-2][0-9]}/{month:[0-9]{1,2}}/]',
     function (Request $request, Response $response, array $args) {
         $category = new Category($args['category']);
         $category -> setYear($args['year'] ?? null)

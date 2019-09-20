@@ -75,7 +75,7 @@
         return data.name;
       },
       text () {
-        if (this.isValueCategory) {
+        if (!this.titleDescription && this.isValueCategory) {
           return '';
         }
 

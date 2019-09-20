@@ -14,8 +14,6 @@ const events = {
   REMOTE_LOADED: 'MONTH_REMOTE_LOADED',
   DATA_NOT_LOADED: 'MONTH_DATA_NOT_LOADED',
   DATA_LOADED: 'MONTH_DATA_LOADED',
-  DATA_SAVE: 'MONTH_DATA_SAVE',
-  DATA_RESTORE: 'MONT_DATA_RESTORE',
   DATA_SUMMARY: 'MONTH_DATA_SUMMARY',
   DATA_PATCH: 'MONTH_DATA_PATCH',
 };
@@ -60,21 +58,6 @@ export default {
     [events.DATA_LOADED] (state) {
       state.isLoaded = true;
     },
-    [events.DATA_SAVE] (state, date) {
-      state.months[getStringFromDate(date)] = {
-        data: JSON.parse(JSON.stringify(state.data)),
-        summary: JSON.parse(JSON.stringify(state.summary)),
-        isLoaded: true,
-      };
-    },
-    [events.DATA_RESTORE] (state, date) {
-      const keys = Object.keys(state.data);
-      for (let i = 0; i < keys.length; i++) {
-        state.data[keys[i]].data = state.months[getStringFromDate(date)].data[keys[i]].data;
-      }
-      state.summary = state.months[getStringFromDate(date)].summary;
-      state.isLoaded = true;
-    },
     [events.DATA_SUMMARY] (state, { year, month, summary }) {
       state.summary = summary;
     },
@@ -93,25 +76,15 @@ export default {
 
       const { year, month } = date;
 
-      // const statusState = await dispatch('loadMonthFromState', date);
-      // if (statusState) {
-      //   return;
-      // }
-
-      const statusCache = await dispatch('loadMonthFromCache', date);
-      if (statusCache && moment().diff(moment().year(year).month(month), 'months') > 1) {
+      const data = await this._vm.$getItem('month-' + year + '-' + month);
+      const isMonthInCache = !!data;
+      if (isMonthInCache && moment().diff(moment().year(year).month(month), 'months') > 1) {
+        await dispatch('loadMonthFromCache', date);
         return;
       }
 
       return await dispatch('loadMonthFromAPI', date);
     },
-    // async loadMonthFromState ({ commit, getters }, date) {
-    //   if (!getters.getIsMonthLoaded(date))
-    //     return false;
-
-    //   commit(events.DATA_RESTORE, date);
-    //   return true;
-    // },
     async loadMonthFromCache ({ commit, dispatch }, date) {
       const { year, month } = date;
 
@@ -122,7 +95,6 @@ export default {
 
       commit(events.CACHE_HIT, date);
       await dispatch('processData', { year, month, data });
-      await dispatch('saveDataToState', { year, month, data });
       commit(events.CACHE_LOADED, date);
       return true;
     },
@@ -140,27 +112,50 @@ export default {
       commit(events.REMOTE_SUCCESS, date);
       await dispatch('saveDataToCache', { year, month, data });
       await dispatch('processData', { year, month, data });
-      await dispatch('saveDataToState', { year, month, data });
       commit(events.REMOTE_LOADED, date);
       return true;
     },
     async saveDataToCache ({ commit }, { year, month, data }) {
       await this._vm.$setItem('month-' + year + '-' + month, data);
     },
-    async saveDataToState ({ commit }, date) {
-      // commit(events.DATA_SAVE, date);
-      await sleep(0);
-    },
     async processData ({ commit }, { year, month, data }) {
       commit(events.DATA_SUMMARY, { year, month, summary: data.summary });
       await sleep(0);
+
+      // Это костыль, да, здарова
+      commit(events.DATA_PATCH, { year, month, category: 'value', data: data['value'] });
+      await sleep(0);
+      commit(events.DATA_PATCH, { year, month, category: 'solo-value_value', data: data['solo-value_value'] });
+      await sleep(0);
+      commit(events.DATA_PATCH, { year, month, category: 'count', data: data['count'] });
+      await sleep(0);
+      commit(events.DATA_PATCH, { year, month, category: 'solo-count_count', data: data['solo-count_count'] });
+      await sleep(0);
+      commit(events.DATA_PATCH, { year, month, category: 'zkb_points', data: data['zkb_points'] });
+      await sleep(0);
+      commit(events.DATA_PATCH, { year, month, category: 'dedication', data: data['dedication'] });
+      await sleep(0);
+      commit(events.DATA_PATCH, { year, month, category: 'diversity', data: data['diversity'] });
+      await sleep(0);
+      // Вот тут костыль кончился уже, да
 
       const keys = Object.keys(data);
       for (let i = 0; i < keys.length; i++) {
         const category = keys[i];
 
-        if (category === 'summary') {
-          continue;
+        switch (category) {
+          case 'summary':
+          // Это куски костыля сверху
+          case 'value':
+          case 'count':
+          case 'solo-value_value':
+          case 'solo-count_count':
+          case 'zkb_points':
+          case 'dedication':
+          case 'diversity':
+          // Вот тут куски кончились, да
+            continue;
+            break;
         }
 
         commit(events.DATA_PATCH, { year, month, category, data: data[category] });

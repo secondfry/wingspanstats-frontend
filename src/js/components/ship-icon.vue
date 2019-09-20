@@ -1,14 +1,19 @@
 <script>
+  import AsyncImage from './async-image.vue'
+
   export default {
     props: ['id'],
     computed: {
-      image () {
-        return 'https://imageserver.eveonline.com/Render/' + this.id + '_32.png'
+      template () {
+        return 'https://imageserver.eveonline.com/Render/' + this.id
       }
-    }
+    },
+    components: {
+      AsyncImage
+    },
   }
 </script>
 
 <template>
-  <img :src="image">
+  <async-image :template="template" size="small" format="png" />
 </template>

@@ -25,12 +25,12 @@
     },
     computed: {
       ...mapState({
-        isMonthLoaded: state => state.month.isLoaded,
         arePilotMedalsLoaded: state => state.pilot_medals.isLoaded,
         arePilotNamesLoaded: state => state.pilot_names.isLoaded,
         summary: state => state.month.summary,
       }),
       ...mapGetters([
+        'getIsMonthLoaded',
         'getFirstInCategory',
         'getPilotName',
       ]),
@@ -50,15 +50,12 @@
           return this.sort(this.diverse.weapon_type_ids);
         }
       },
-      today () {
-        return moment()
-      },
       moment () {
         if (this.yearData && this.monthData) {
           return moment(this.yearData + '-' + this.monthData);
         }
 
-        return this.today;
+        return moment();
       },
       date: function () {
         if (this.monthData && this.yearData) {
@@ -76,8 +73,7 @@
     },
     methods: {
       ...mapActions([
-        'loadMonthCache',
-        'loadMonthFast',
+        'loadMonth',
         'loadPilotMedalsFast',
         'loadPilotNamesFast',
       ]),
@@ -92,8 +88,8 @@
       }
     },
     created () {
-      if (!this.isMonthLoaded) {
-        this.loadMonthFast(this.date);
+      if (!this.getIsMonthLoaded(this.date)) {
+        this.loadMonth(this.date);
       }
 
       if (!this.arePilotNamesLoaded) {
@@ -106,11 +102,7 @@
 
       EventBus.$on('month', ({ year, month }) => {
         this.setMonth(year, month);
-        if (this.today.diff(moment().year(year).month(month), 'months') > 1) {
-          this.loadMonthCache(this.date);
-        } else {
-          this.loadMonthFast(this.date);
-        }        
+        this.loadMonth(this.date);
       });
     },
     destroyed () {

@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import sleep from '../utility/sleep'
+
 import default_state from '../components/view-month/registry-leaderboards'
 const real_default_state = JSON.parse(JSON.stringify(default_state));
 
@@ -10,21 +12,6 @@ const events = {
   PATCH: 'MONTH_PATCH',
   FINISHER: 'MONTH_FINISHER',
   REQUEST: 'MONTH_REQUEST',
-};
-
-const processData = (state, data) => {
-  for (let category of Object.keys(data)) {
-    if (!state[category] || category === 'summary') {
-      // We don't display some categories on client
-      continue;
-    }
-
-    requestAnimationFrame(() => {
-      state[category].data = data[category];
-    });
-  }
-  state.summary = data.summary;
-  state.isLoaded = true;
 };
 
 export default {
@@ -38,6 +25,10 @@ export default {
     isLoaded: false
   },
   getters: {
+    getIsMonthLoaded: state => date => {
+      try { return state[date].isLoaded; }
+      catch (e) { return false; }
+    },
     getCategory: state => category => {
       try { return state[category].data }
       catch (e) {}
@@ -45,10 +36,10 @@ export default {
     getFirstInCategory: (state, getters) => category => {
       try { return getters.getCategory(category)[0] }
       catch (e) {}
-    }
+    },
   },
   mutations: {
-    [events.PATCH] (state, { category, data }) {
+    [events.PATCH] (state, { year, month, category, data }) {
       if (!state[category]) {
         // We don't display some categories on client
         return;
@@ -56,66 +47,55 @@ export default {
 
       state[category].data = data;
     },
-    [events.FINISHER] (state, data) {
+    [events.FINISHER] (state, { year, month, data }) {
       state.summary = data.summary;
       state.isLoaded = true;
     },
-    [events.CACHE_HIT] (state, data) {
-      processData(state, data);
-    },
-    [events.LOAD_SUCCESS] (state, data) {
-      processData(state, data);
-    },
   },
   actions: {
-    loadMonthCache ({ commit, dispatch }, { year, month }) {
-      return this._vm.$getItem('month-' + year + '-' + month)
-        .then(data => {
-          if (data) {
-            dispatch('startCascade', data);
-            return true;
-          } else {
-            dispatch('loadMonth', { year, month });
-            return false;
-          }
-        })
-        .catch(console.log.bind(console));
+    async loadMonth ({ commit, dispatch }, { year, month }) {
+      const statusCache = await dispatch('loadMonthFromCache', { year, month });
+      if (statusCache && moment().diff(moment().year(year).month(month), 'months') > 1) {
+        return;
+      }
+
+      return await dispatch('loadMonthFromAPI', { year, month });
     },
-    loadMonthFast ({ commit, dispatch }, { year, month }) {
-      return dispatch('loadMonthCache', { year, month })
-        .then(status => {
-          if (status) {
-            return dispatch('loadMonth', { year, month });
-          }          
-        })
-        .catch(console.log.bind(console));
+    async loadMonthFromCache ({ dispatch }, { year, month }) {
+      const data = await this._vm.$getItem('month-' + year + '-' + month);
+      if (!data) {
+        return false;
+      }
+
+      await dispatch('startCascade', { year, month, data });
+      return true;
     },
-    loadMonth ({ commit, dispatch }, { year, month }) {
+    async loadMonthFromAPI ({ dispatch }, { year, month }) {
       commit(events.REQUEST);
-      return axios
-        .get('/api/month/' + year + '/' + month + '/')
-        .then(res => res.data)
-        .then(data => {
-          this._vm.$setItem('month-' + year + '-' + month, data);
-          dispatch('startCascade', data);
-        })
-        .catch(console.log.bind(console))
+      const res = await axios.get('/api/month/' + year + '/' + month + '/');
+      const data = res.data;
+      if (!data) {
+        return false;
+      }
+
+      await this._vm.$setItem('month-' + year + '-' + month, data);
+      await dispatch('startCascade', { year, month, data });
+      return true;
     },
-    startCascade ({ commit, dispatch }, data) {
+    async startCascade ({ commit, dispatch }, { year, month, data }) {
       for (let category of Object.keys(data)) {
         if (category === 'summary') {
           continue;
         }
 
-        dispatch('applyCategory', { category, data: data[category] });
+        await dispatch('applyCategory', { year, month, category, data: data[category] });
       }
 
-      commit(events.FINISHER, data);
+      commit(events.FINISHER, { year, month, data });
     },
-    applyCategory ({ commit }, { category, data }) {
-      requestAnimationFrame(() => {
-        commit(events.PATCH, { category, data });
-      });
+    async applyCategory ({ commit }, { year, month, category, data }) {
+      commit(events.PATCH, { year, month, category, data });
+      await sleep(0);
     },
   }
 }

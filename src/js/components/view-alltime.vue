@@ -1,7 +1,8 @@
 <script>
   import { mapActions, mapState } from 'vuex'
 
-  import logo from '../../files/logo.png'
+  import logo from '../../files/logo.png';
+  import logoDark from '../../files/logo-dark.png';
 
   export default {
     computed: {
@@ -9,8 +10,12 @@
         isLoaded: state => state.alltime.isLoaded,
         value: state => (state.alltime.data.value / Math.pow(10, 12)).toFixed(2),
         count: state => state.alltime.data.count,
-        damage: state => (state.alltime.data.damage / Math.pow(10, 9)).toFixed(2)
+        damage: state => (state.alltime.data.damage / Math.pow(10, 9)).toFixed(2),
+        darkMode: state => state.user.settings.darkMode,
       }),
+      _logo () {
+        return this.darkMode ? logoDark : logo;
+      }
     },
     methods: {
       ...mapActions([
@@ -32,7 +37,7 @@
 
 <template>
   <div class="alltime-wrap my-3">
-    <img :src="logo" class="alltime-logo img-fluid" alt="Wingspan Delivery Services logo">
+    <img :src="_logo" class="alltime-logo img-fluid" alt="Wingspan Delivery Services logo">
     <div class="alltime-border"></div>
     <div id="alltime-data">
       <div>

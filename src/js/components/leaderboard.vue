@@ -186,6 +186,10 @@
   }
   .leaderboard-icon {
     width: 15px;
+
+    .bg-night & {
+      filter: invert(1);
+    }
   }
   .leaderboard-places {
     display: grid;

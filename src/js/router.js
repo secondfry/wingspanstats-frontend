@@ -1,24 +1,21 @@
 import VueRouter from 'vue-router'
 
-import PageAchievements from './pages/achievements.vue'
-import PageIndex from './pages/index.vue'
-import PageCategory from './pages/category.vue'
 import SSO from './pages/sso.vue'
 
 const routes = [
   {
     path: '/',
-    component: PageIndex,
+    component: () => import(/* webpackChunkName: "page-index" */ './pages/index.vue'),
     name: 'root',
   },
   {
     path: '/category/:category',
-    component: PageCategory,
+    component: () => import(/* webpackChunkName: "page-category" */ './pages/category.vue'),
     name: 'category',
   },
   {
     path: '/achievements',
-    component: PageAchievements,
+    component: () => import(/* webpackChunkName: "page-achievements" */ './pages/achievements.vue'),
     name: 'achievements',
   },
   {

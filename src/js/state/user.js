@@ -39,8 +39,8 @@ export default {
         })
         .catch(console.log.bind(console));
     },
-    trackUserId ({ commit }, id) {
-      this._vm.$setItem('user', { id });
+    async trackUserId ({ commit }, id) {
+      await this._vm.$setItem('user', { id });
       return commit(events.TRACK, id);
     },
     addRival ({ commit }, id) {

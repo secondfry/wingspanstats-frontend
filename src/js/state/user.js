@@ -41,14 +41,13 @@ export default {
     },
   },
   actions: {
-    loadUserId ({ commit }) {
-      return this._vm.$getItem('user')
-        .then(data => {
-          if (data) {
-            commit(events.TRACK_CACHE_HIT, data.id);
-          }
-        })
-        .catch(console.log.bind(console));
+    async loadUserId ({ commit }) {
+      const data = await this._vm.$getItem('user');
+      if (!data) {
+        return;
+      }
+
+      commit(events.TRACK_CACHE_HIT, data.id);
     },
     async trackUserId ({ commit }, id) {
       await this._vm.$setItem('user', { id });

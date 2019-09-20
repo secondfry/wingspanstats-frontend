@@ -32,6 +32,7 @@ export default {
       damage: null,
       value: null
     },
+    isLoaded: false,
     months: {},
   },
   getters: {

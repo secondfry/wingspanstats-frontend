@@ -72,7 +72,7 @@
         Rewritten in March, 2018. Consistency!<br>
         Also check <a target="_blank" href="https://www.youtube.com/user/SecondFry" rel="noopener">my YouTube channel</a> :P.
       </p>
-      <p>Original idea by <a href="https://zkillboard.com/character/92805979/">Valtyr Farshield</a> @ <a
+      <p class="mb-0">Original idea by <a href="https://zkillboard.com/character/92805979/">Valtyr Farshield</a> @ <a
           href="https://github.com/farshield/wingspanstats">GitHub</a>.</p>
     </footer>
   </div>
@@ -80,9 +80,6 @@
 
 <style lang="scss">
   .sf-footer {
-    margin-bottom: 80px;
-    @include media-breakpoint-up(md) {
-      margin-bottom: unset;
-    }
+    padding-bottom: 80px;
   }
 </style>

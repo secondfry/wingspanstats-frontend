@@ -3,6 +3,8 @@ const events = {
   RIVALS_RESET: 'RIVALS_RESET',
   TRACK: 'USER_TRACK',
   TRACK_CACHE_HIT: 'TRACK_CACHE_HIT',
+  SETTINGS_SET_NIGHT: 'SETTINGS_SET_NIGHT',
+  SETTINGS_CACHE_HIT: 'SETTINGS_CACHE_HIT',
 };
 
 export default {
@@ -10,7 +12,10 @@ export default {
     user: {
       id: null
     },
-    rivals: []
+    rivals: [],
+    settings: {
+      darkMode: false,
+    }
   },
   getters: {
     hasUser: state => !!state.user.id
@@ -27,20 +32,25 @@ export default {
     },
     [events.RIVALS_RESET] (state) {
       state.rivals = [];
-    }
+    },
+    [events.SETTINGS_SET_NIGHT] (state, isDark) {
+      state.settings.darkMode = isDark;
+    },
+    [events.SETTINGS_CACHE_HIT] (state, data) {
+      state.settings.darkMode = data.isDark;
+    },
   },
   actions: {
-    loadUserId ({ commit }) {
-      return this._vm.$getItem('user')
-        .then(data => {
-          if (data) {
-            commit(events.TRACK_CACHE_HIT, data.id);
-          }
-        })
-        .catch(console.log.bind(console));
+    async loadUserId ({ commit }) {
+      const data = await this._vm.$getItem('user');
+      if (!data) {
+        return;
+      }
+
+      commit(events.TRACK_CACHE_HIT, data.id);
     },
-    trackUserId ({ commit }, id) {
-      this._vm.$setItem('user', { id });
+    async trackUserId ({ commit }, id) {
+      await this._vm.$setItem('user', { id });
       return commit(events.TRACK, id);
     },
     addRival ({ commit }, id) {
@@ -48,6 +58,21 @@ export default {
     },
     resetRivals ({ commit }) {
       return commit(events.RIVALS_RESET);
+    },
+    async loadSettings ({ commit }) {
+      const data = await this._vm.$getItem('settings');
+      if (!data) {
+        return;
+      }
+
+      commit(events.SETTINGS_CACHE_HIT, data);
+    },
+    async setNight ({ commit }, isDark) {
+      localStorage.isDark = isDark;
+      document.body.style.background = '';
+
+      await this._vm.$setItem('settings', { isDark });
+      return commit(events.SETTINGS_SET_NIGHT, isDark);
     }
   }
 }

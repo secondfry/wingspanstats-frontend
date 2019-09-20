@@ -1,22 +1,17 @@
 <script>
-  import { mapActions, mapGetters, mapState } from 'vuex'
+  import { mapActions, mapGetters, mapState } from 'vuex';
 
-  import LeaderboardPilot from './leaderboard/leaderboard-pilot.vue'
+  import LeaderboardPilot from './leaderboard/leaderboard-pilot.vue';
 
-  import iconPlane from '../../files/plane.svg'
-  import iconGrave from '../../files/grave.svg'
-  import iconSwords from '../../files/swords.svg'
-  import leaderboards from './view-month/registry-leaderboards'
-  const realLeaderboards = JSON.parse(JSON.stringify(leaderboards));
+  import iconPlane from '../../files/plane.svg';
+  import iconGrave from '../../files/grave.svg';
+  import iconSwords from '../../files/swords.svg';
+  import { getLeaderboard } from './view-month/registry-leaderboards';
 
   export default {
     props: ['type', 'title', 'title-description'],
     data () {
       return {
-        iconGrave,
-        iconPlane,
-        iconSwords,
-        leaderboards: realLeaderboards,
         userPlace: null,
       }
     },
@@ -47,7 +42,7 @@
       },
       icon () {
         if (this.isWeaponCategory) {
-          return this.iconSwords;
+          return iconSwords;
         }
 
         if (!this.isShipCategory) {
@@ -55,8 +50,8 @@
         }
 
         switch (this.typeArray[1]) {
-          case 'driver': return this.iconPlane;
-          case 'killer': return this.iconGrave;
+          case 'driver': return iconPlane;
+          case 'killer': return iconGrave;
           default: return undefined;
         }
       },
@@ -72,7 +67,7 @@
           return '';
         }
 
-        const data = this.leaderboards[this.type];
+        const data = getLeaderboard(this.type);
         if (!data || !data.name) {
           return this.type;
         }
@@ -80,11 +75,11 @@
         return data.name;
       },
       text () {
-        if (this.isValueCategory) {
+        if (!this.titleDescription && this.isValueCategory) {
           return '';
         }
 
-        const data = this.leaderboards[this.type];
+        const data = getLeaderboard(this.type);
         if (!data || !data.empty) {
           return '';
         }
@@ -191,6 +186,10 @@
   }
   .leaderboard-icon {
     width: 15px;
+
+    .bg-night & {
+      filter: invert(1);
+    }
   }
   .leaderboard-places {
     display: grid;

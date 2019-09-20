@@ -18,21 +18,17 @@
       ...mapActions([
         'trackUserId'
       ]),
-      fetchCharId () {
-        axios({
+      async fetchCharId () {
+        const res = await axios({
           url: 'https://esi.evetech.net/verify/',
           headers: {
             Authorization: 'Bearer ' + this.sso.access_token,
           },
-        })
-          .then(res => res.data.CharacterID)
-          .then(this.trackUserId)
-          .then(() => {
-            this.$router.push({
-              name: 'root'
-            });
-          })
-          .catch(console.log.bind(console));
+        });
+        await this.trackUserId(res.data.CharacterID);
+        this.$router.push({
+          name: 'root'
+        });
       }
     },
     created () {

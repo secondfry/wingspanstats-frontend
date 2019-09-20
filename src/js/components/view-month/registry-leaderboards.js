@@ -1,4 +1,4 @@
-export default {
+const leaderboards = {
   'pod_driver_count': {name: 'YOLOSWAG', empty: 'They see me rollin, they hatin', data: []},
   'pod_driver_value': {name: 'YOLOSWAG', empty: '', data: []},
   'pod_killer_count': {name: 'Biomass Extractor', empty: 'Would you like to see my collection of corpses?', data: []},
@@ -91,4 +91,8 @@ export default {
   'zkb_points': {name: '<abbr title="zKillboard Points">ZPs</abbr>', empty: 'Also known as the best and the only proper pilot skill evaluation', data: []},
   'count': {name: 'Deliveries', empty: 'NO DELIVERIES? WHAT ARE WE? GOONS?', data: []},
   'value': {name: 'Da Real Pirate', empty: 'Show me da booty', data: []}
-}
+};
+
+const getLeaderboard = key => leaderboards[key];
+
+export { leaderboards as default, getLeaderboard };

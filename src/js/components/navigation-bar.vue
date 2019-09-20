@@ -118,6 +118,10 @@
       z-index: unset;
       height: 100px;
     }
+
+    .bg-night & {
+      background: #111;
+    }
   }
   .scroller {
     position: absolute;
@@ -146,13 +150,23 @@
     display: grid;
     align-items: center;
     justify-items: center;
-    border: 1px solid #97b0f8;
-    background: #d5ddf6;
+    border: 1px solid darken($color-timeline-month, 10%);
+    background: $color-timeline-month;
     border-radius: .25rem;
 
     &.active {
-      border-color: #ffc200;
-      background-color: #fff785;
+      background-color: $color-timeline-month-active;
+      border-color: darken($color-timeline-month-active, 10%);
+    }
+
+    .bg-night & {
+      background: $color-night-timeline-month;
+      border-color: darken($color-night-timeline-month, 10%);
+
+      &.active {
+        background: $color-night-timeline-month-active;
+        border-color: darken($color-night-timeline-month-active, 10%);
+      }
     }
   }
 </style>

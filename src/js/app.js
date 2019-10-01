@@ -9,7 +9,7 @@ Vue.use(Vuex);
 Vue.use(VueLocalForage);
 Vue.use(VueRouter);
 
-const app = new Vue({
+new Vue({
   router,
   store,
   el: '#vue-root',

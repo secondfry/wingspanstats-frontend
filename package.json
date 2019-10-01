@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development gulp",
     "prod": "cross-env NODE_ENV=production webpack && cross-env NODE_ENV=production gulp",
-    "watch": "concurrently --kill-others-on-fail -n webpack,gulp \"cross-env NODE_ENV=development webpack --watch\" \"cross-env NODE_ENV=production gulp watch\""
+    "watch": "concurrently --kill-others-on-fail -n webpack,gulp \"cross-env NODE_ENV=development webpack --watch\" \"cross-env NODE_ENV=production gulp watch\"",
+    "eslint": "eslint --ext .js,.vue src"
   },
   "keywords": [],
   "author": "",

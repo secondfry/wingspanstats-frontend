@@ -12,6 +12,6 @@
 
 <template>
   <layout-default>
-    <view-month></view-month>
+    <view-month />
   </layout-default>
 </template>

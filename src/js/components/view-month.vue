@@ -121,33 +121,74 @@
 
 <template>
   <div>
-    <div class="font-weight-bold text-center my-3">{{ monthName }}, YC1{{ yearShort }}</div>
-    <month-summary></month-summary>
-    <div class="month-leaderboards">
-      <leaderboard type="value" title="Employee of the Month" title-description="Most ISK destroyed"></leaderboard>
-      <leaderboard type="solo-value_value" title="Top Lone Enterprising Agent" title-description="Most ISK destroyed solo"></leaderboard>
-      <leaderboard type="count" title="Deliveries"></leaderboard>
-      <leaderboard type="solo-count_count" title="Solo" title-description="As it goes by zKillboard's solo rules"></leaderboard>
-      <leaderboard type="zkb_points"></leaderboard>
+    <div class="font-weight-bold text-center my-3">
+      {{ monthName }}, YC1{{ yearShort }}
     </div>
-    <div v-if="dedicated" class="text-center my-3">
-      <pilot-icon-with-medals :id="dedicated.character_id" category="dedication"></pilot-icon-with-medals>
+    <month-summary />
+    <div class="month-leaderboards">
+      <leaderboard
+        type="value"
+        title="Employee of the Month"
+        title-description="Most ISK destroyed"
+      />
+      <leaderboard
+        type="solo-value_value"
+        title="Top Lone Enterprising Agent"
+        title-description="Most ISK destroyed solo"
+      />
+      <leaderboard
+        type="count"
+        title="Deliveries"
+      />
+      <leaderboard
+        type="solo-count_count"
+        title="Solo"
+        title-description="As it goes by zKillboard's solo rules"
+      />
+      <leaderboard type="zkb_points" />
+    </div>
+    <div
+      v-if="dedicated"
+      class="text-center my-3"
+    >
+      <pilot-icon-with-medals
+        :id="dedicated.character_id"
+        category="dedication"
+      />
       {{ getPilotName(dedicated.character_id) }} | Most dedicated pilot
       <span class="d-none d-md-inline">|</span><br class="d-block d-md-none">
       {{ dedicated.value }} deliveries on
-      <ship-icon :id="dedicated.match.ship_type_id"></ship-icon><weapon-icon :id="dedicated.match.weapon_type_id"></weapon-icon>
+      <ship-icon :id="dedicated.match.ship_type_id" /><weapon-icon :id="dedicated.match.weapon_type_id" />
     </div>
-    <div v-if="diverse" class="text-center my-3">
-      <pilot-icon-with-medals :id="diverse.character_id" category="diversity"></pilot-icon-with-medals>
+    <div
+      v-if="diverse"
+      class="text-center my-3"
+    >
+      <pilot-icon-with-medals
+        :id="diverse.character_id"
+        category="diversity"
+      />
       {{ getPilotName(diverse.character_id) }} | Most diverse pilot
       <span class="d-none d-md-inline">|</span><br class="d-block d-md-none">
       {{ diverse.value }} diversity index<br>
-      <ship-icon v-for="id in diverseShips" :key="'r' + id" :id="id"></ship-icon><br>
-      <weapon-icon v-for="id in diverseWeapons" :key="'t' + id" :id="id"></weapon-icon>
+      <ship-icon
+        v-for="id in diverseShips"
+        :id="id"
+        :key="'r' + id"
+      /><br>
+      <weapon-icon
+        v-for="id in diverseWeapons"
+        :id="id"
+        :key="'t' + id"
+      />
     </div>
-    <navigation-bar></navigation-bar>
+    <navigation-bar />
     <div class="month-leaderboards">
-      <leaderboard v-for="data, category in leaderboards" :key="category" :type="category"></leaderboard>
+      <leaderboard
+        v-for="data, category in leaderboards"
+        :key="category"
+        :type="category"
+      />
     </div>
   </div>
 </template>

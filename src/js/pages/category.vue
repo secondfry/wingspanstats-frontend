@@ -12,6 +12,6 @@
 
 <template>
   <layout-default>
-    <view-category :category="$route.params.category"></view-category>
+    <view-category :category="$route.params.category" />
   </layout-default>
 </template>

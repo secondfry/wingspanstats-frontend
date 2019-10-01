@@ -37,8 +37,12 @@
 
 <template>
   <div class="alltime-wrap my-3">
-    <img :src="_logo" class="alltime-logo img-fluid" alt="Wingspan Delivery Services logo">
-    <div class="alltime-border"></div>
+    <img
+      :src="_logo"
+      class="alltime-logo img-fluid"
+      alt="Wingspan Delivery Services logo"
+    >
+    <div class="alltime-border" />
     <div id="alltime-data">
       <div>
         <strong>{{ value }}T ISK</strong> estimate

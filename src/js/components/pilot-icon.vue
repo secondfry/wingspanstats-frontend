@@ -23,7 +23,15 @@
 </script>
 
 <template>
-  <a :href="zkb" class="position-relative">
-    <async-image :template="template" :alt="getPilotName(id)" :size="size" format="jpg" />
+  <a
+    :href="zkb"
+    class="position-relative"
+  >
+    <async-image
+      :template="template"
+      :alt="getPilotName(id)"
+      :size="size"
+      format="jpg"
+    />
   </a>
 </template>

@@ -35,15 +35,15 @@
     <div>
       <strong>{{ value }}B ISK</strong> estimate
     </div>
-    <div class="alltime-border"></div>
+    <div class="alltime-border" />
     <div>
       <strong>{{ count }}</strong> deliveries
     </div>
-    <div class="alltime-border"></div>
+    <div class="alltime-border" />
     <div>
       <strong>{{ average }}M ISK</strong> average
     </div>
-    <div class="alltime-border"></div>
+    <div class="alltime-border" />
     <div>
       <strong>{{ damage }}M <abbr title="Customer's Resistance Points">CRP</abbr></strong> dealt with
     </div>

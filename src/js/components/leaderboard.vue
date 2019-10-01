@@ -9,7 +9,7 @@
   import { getLeaderboard } from './view-month/registry-leaderboards';
 
   export default {
-    props: ['type', 'title', 'title-description'],
+    props: ['type', 'title', 'titleDescription'],
     data () {
       return {
         userPlace: null,
@@ -148,19 +148,46 @@
 <template>
   <div :class="[{ tracking: hasUser }, 'leaderboard-wrap']">
     <div class="leaderboard-actions">
-      <div class="font-weight-bold" v-html="_title"></div>
+      <div
+        class="font-weight-bold"
+        v-html="_title"
+      />
       <small>
-        <span v-if="isShowingTip" class="leaderboard-ship-tip text-muted">
-          <img :src="icon" class="leaderboard-icon">
+        <span
+          v-if="isShowingTip"
+          class="leaderboard-ship-tip text-muted"
+        >
+          <img
+            :src="icon"
+            class="leaderboard-icon"
+          >
           {{ typeArray[0] }}
         </span>
-        <a :href="url" @click="navigate">Overview ({{ typeArray[typeArray.length - 1] }})</a>
+        <a
+          :href="url"
+          @click="navigate"
+        >Overview ({{ typeArray[typeArray.length - 1] }})</a>
       </small>
     </div>
-    <div :class="[{ tracking: index === '4' }, 'leaderboard-places']" v-for="(list, index) of places" v-if="list.length">
-      <leaderboard-pilot :pilot="pilot" :listLength="list.length" :category="type" v-for="pilot in list" :key="pilot.character_id"></leaderboard-pilot>
+    <div
+      v-for="(list, index) of places"
+      v-if="list.length"
+      :class="[{ tracking: index === '4' }, 'leaderboard-places']"
+    >
+      <leaderboard-pilot
+        v-for="pilot in list"
+        :key="pilot.character_id"
+        :pilot="pilot"
+        :list-length="list.length"
+        :category="type"
+      />
     </div>
-    <div class="leaderboard-message text-center" v-if="!checkPlaces(places)">{{ text }}</div>
+    <div
+      v-if="!checkPlaces(places)"
+      class="leaderboard-message text-center"
+    >
+      {{ text }}
+    </div>
   </div>
 </template>
 

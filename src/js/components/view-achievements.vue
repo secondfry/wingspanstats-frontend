@@ -56,8 +56,14 @@
 <template>
   <div>
     <div v-for="achievement of sorted">
-      <div class="font-weight-bold text-center mt-3" v-text="achievement.title"></div>
-      <div class="font-weight-bold text-center mb-3 small" v-text="achievement.description"></div>
+      <div
+        class="font-weight-bold text-center mt-3"
+        v-text="achievement.title"
+      />
+      <div
+        class="font-weight-bold text-center mb-3 small"
+        v-text="achievement.description"
+      />
       <table class="table table-sm">
         <thead class="thead-dark">
           <tr>

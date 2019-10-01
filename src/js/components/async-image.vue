@@ -35,7 +35,11 @@
 </script>
 
 <template>
-  <img :src="image" :class="sizeIntClass" :alt="alt">
+  <img
+    :src="image"
+    :class="sizeIntClass"
+    :alt="alt"
+  >
 </template>
 
 <style lang="scss">

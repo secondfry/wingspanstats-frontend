@@ -99,19 +99,50 @@
 
 <template>
   <div class="position-relative d-inline-block">
-    <pilot-icon :id="id" :size="size"></pilot-icon>
+    <pilot-icon
+      :id="id"
+      :size="size"
+    />
     <div class="chevrons">
-      <div v-if="hasMedals(1)" class="smpl-tt" :title="titles[1]">
-        <div :style="styles[1]" class="chevron place-gold"></div>
+      <div
+        v-if="hasMedals(1)"
+        class="smpl-tt"
+        :title="titles[1]"
+      >
+        <div
+          :style="styles[1]"
+          class="chevron place-gold"
+        />
       </div>
-      <div v-if="hasMedals(2)" class="smpl-tt" :title="titles[2]">
-        <div :style="styles[2]" class="chevron place-silver"></div>
+      <div
+        v-if="hasMedals(2)"
+        class="smpl-tt"
+        :title="titles[2]"
+      >
+        <div
+          :style="styles[2]"
+          class="chevron place-silver"
+        />
       </div>
-      <div v-if="hasMedals(3)" class="smpl-tt" :title="titles[3]">
-        <div :style="styles[3]" class="chevron place-bronze"></div>
+      <div
+        v-if="hasMedals(3)"
+        class="smpl-tt"
+        :title="titles[3]"
+      >
+        <div
+          :style="styles[3]"
+          class="chevron place-bronze"
+        />
       </div>
-      <div v-if="hasMedals(4)" class="smpl-tt" :title="titles[4]">
-        <div :style="styles[4]" class="chevron place-wingspan"></div>
+      <div
+        v-if="hasMedals(4)"
+        class="smpl-tt"
+        :title="titles[4]"
+      >
+        <div
+          :style="styles[4]"
+          class="chevron place-wingspan"
+        />
       </div>
     </div>
   </div>

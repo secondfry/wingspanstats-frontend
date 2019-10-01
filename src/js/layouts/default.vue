@@ -59,42 +59,81 @@
 </script>
 
 <template>
-  <div id="root" :class="cssClassesRoot">
+  <div
+    id="root"
+    :class="cssClassesRoot"
+  >
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand" href="/" data-name="root" @click="navigate">Wingspan Delivery Services Statistics</a>
+        <a
+          class="navbar-brand"
+          href="/"
+          data-name="root"
+          @click="navigate"
+        >Wingspan Delivery Services Statistics</a>
         <ul class="navbar-nav w-100">
           <li class="nav-item mr-auto">
-            <a class="nav-item nav-link" href="/achievements" data-name="achievements" @click="navigate">Achievements</a>
+            <a
+              class="nav-item nav-link"
+              href="/achievements"
+              data-name="achievements"
+              @click="navigate"
+            >Achievements</a>
           </li>
           <li class="nav-item">
-            <a class="nav-item nav-link" href="#" @click="switchSide" v-text="switchText"></a>
+            <a
+              class="nav-item nav-link"
+              href="#"
+              @click="switchSide"
+              v-text="switchText"
+            />
           </li>
           <li class="nav-item">
-            <a class="nav-item nav-link" href="#" @click="reset">Reset</a>
+            <a
+              class="nav-item nav-link"
+              href="#"
+              @click="reset"
+            >Reset</a>
           </li>
-          <li class="nav-item" v-if="!hasUser()">
-            <a class="nav-item nav-link" href="#" @click="track">Track your character</a>
+          <li
+            v-if="!hasUser()"
+            class="nav-item"
+          >
+            <a
+              class="nav-item nav-link"
+              href="#"
+              @click="track"
+            >Track your character</a>
           </li>
         </ul>
       </div>
     </nav>
     <div class="container my-3">
-      <view-all-time></view-all-time>
-      <slot></slot>
+      <view-all-time />
+      <slot />
     </div>
-    <div class="p-3 my-3 text-center bg-success text-light">We are back!</div>
+    <div class="p-3 my-3 text-center bg-success text-light">
+      We are back!
+    </div>
     <footer class="sf-footer container text-center">
       <p>
         Yours truly, <a href="https://twitter.com/Second_Fry">@Second_Fry</a> (<a
-          href="https://zkillboard.com/character/91435934/">Lenai Chelien</a>).
+          href="https://zkillboard.com/character/91435934/"
+        >Lenai Chelien</a>).
         Adapted for web by in January, 2016.<br>
         Rewritten in March, 2016.<br>
         Rewritten in March, 2018. Consistency!<br>
-        Also check <a target="_blank" href="https://www.youtube.com/user/SecondFry" rel="noopener">my YouTube channel</a> :P.
+        Also check <a
+          target="_blank"
+          href="https://www.youtube.com/user/SecondFry"
+          rel="noopener"
+        >my YouTube channel</a> :P.
       </p>
-      <p class="mb-0">Original idea by <a href="https://zkillboard.com/character/92805979/">Valtyr Farshield</a> @ <a
-          href="https://github.com/farshield/wingspanstats">GitHub</a>.</p>
+      <p class="mb-0">
+        Original idea by <a href="https://zkillboard.com/character/92805979/">Valtyr Farshield</a> @ <a
+          href="https://github.com/farshield/wingspanstats"
+        >GitHub</a>.
+      </p>
     </footer>
   </div>
 </template>

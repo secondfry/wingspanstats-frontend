@@ -38,5 +38,7 @@
 </script>
 
 <template>
-  <div class="position-absolute w-100 h-100 d-flex align-items-center justify-content-center">Redirecting...</div>
+  <div class="position-absolute w-100 h-100 d-flex align-items-center justify-content-center">
+    Redirecting...
+  </div>
 </template>

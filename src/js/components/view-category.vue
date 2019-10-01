@@ -42,7 +42,10 @@
 
 <template>
   <div>
-    <div class="font-weight-bold text-center my-3" v-html="title"></div>
+    <div
+      class="font-weight-bold text-center my-3"
+      v-html="title"
+    />
     <table class="table table-sm">
       <thead class="thead-dark">
         <th>##</th>
@@ -50,10 +53,18 @@
         <th>Value</th>
       </thead>
       <tbody>
-        <tr v-for="pilot, index in pilots" :key="pilot.character_id">
+        <tr
+          v-for="pilot, index in pilots"
+          :key="pilot.character_id"
+        >
           <td>{{ index + 1 }}</td>
           <td>{{ getPilotName(pilot.character_id) }}</td>
-          <td><leaderboard-ticker :pilot="pilot" :category="type"></leaderboard-ticker></td>
+          <td>
+            <leaderboard-ticker
+              :pilot="pilot"
+              :category="type"
+            />
+          </td>
         </tr>
       </tbody>
     </table>

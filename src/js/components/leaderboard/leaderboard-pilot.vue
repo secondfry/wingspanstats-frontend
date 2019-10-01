@@ -64,16 +64,23 @@
 
 <template>
   <div :class="['place', sizeClass]">
-    <div :class="['h-100', placeClass]"></div>
-    <pilot-icon-with-medals :id="pilot.character_id" :size="size" :category="category"></pilot-icon-with-medals>
+    <div :class="['h-100', placeClass]" />
+    <pilot-icon-with-medals
+      :id="pilot.character_id"
+      :size="size"
+      :category="category"
+    />
     <a class="place-name ml-2">
       <div class="small">
-        #{{ pilot.place }} <small><span :class="glyphClass"></span> {{ change }}</small>
+        #{{ pilot.place }} <small><span :class="glyphClass" /> {{ change }}</small>
       </div>
       {{ getPilotName(pilot.character_id) }}
       <br v-if="size === 'large' || hasUser">
       <span v-if="size === 'small' && !hasUser">–</span>
-      <leaderboard-ticker :category="category" :pilot="pilot"></leaderboard-ticker>
+      <leaderboard-ticker
+        :category="category"
+        :pilot="pilot"
+      />
     </a>
   </div>
 </template>

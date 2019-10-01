@@ -21,5 +21,5 @@
 </script>
 
 <template>
-  <span v-html="display"></span>
+  <span v-html="display" />
 </template>

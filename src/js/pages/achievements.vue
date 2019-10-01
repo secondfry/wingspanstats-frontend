@@ -12,6 +12,6 @@
 
 <template>
   <layout-default>
-    <view-achievements></view-achievements>
+    <view-achievements />
   </layout-default>
 </template>

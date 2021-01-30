@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import localforage from 'localforage';
 
 const alltime = {
   CACHE_HIT: 'ALLTIME_CACHE_HIT',
@@ -28,7 +29,7 @@ export default {
   },
   actions: {
     loadAlltimeFast ({ commit, dispatch }) {
-      this._vm.$getItem('alltime')
+      localforage.getItem('alltime')
         .then(data => {
           if (data) {
             commit(alltime.CACHE_HIT, data);
@@ -44,7 +45,7 @@ export default {
       return axios
         .get('/api/summary/')
         .then(res => {
-          this._vm.$setItem('alltime', res.data);
+          localforage.setItem('alltime', res.data);
           commit(alltime.LOAD_SUCCESS, res.data);
         })
         .catch(console.log.bind(console))

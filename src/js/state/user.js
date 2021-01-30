@@ -1,3 +1,5 @@
+import localforage from 'localforage';
+
 const events = {
   RIVAL_ADD: 'RIVAL_ADD',
   RIVALS_RESET: 'RIVALS_RESET',
@@ -42,7 +44,7 @@ export default {
   },
   actions: {
     async loadUserId ({ commit }) {
-      const data = await this._vm.$getItem('user');
+      const data = await localforage.getItem('user');
       if (!data) {
         return;
       }
@@ -50,7 +52,7 @@ export default {
       commit(events.TRACK_CACHE_HIT, data.id);
     },
     async trackUserId ({ commit }, id) {
-      await this._vm.$setItem('user', { id });
+      await localforage.setItem('user', { id });
       return commit(events.TRACK, id);
     },
     addRival ({ commit }, id) {
@@ -60,7 +62,7 @@ export default {
       return commit(events.RIVALS_RESET);
     },
     async loadSettings ({ commit }) {
-      const data = await this._vm.$getItem('settings');
+      const data = await localforage.getItem('settings');
       if (!data) {
         return;
       }
@@ -71,7 +73,7 @@ export default {
       localStorage.isDark = isDark;
       document.body.style.background = '';
 
-      await this._vm.$setItem('settings', { isDark });
+      await localforage.setItem('settings', { isDark });
       return commit(events.SETTINGS_SET_NIGHT, isDark);
     }
   }

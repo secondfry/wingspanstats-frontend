@@ -49,7 +49,8 @@ gulp.task('sass', () => {
 gulp.task('css', () => {
   return gulp.src([
     './dest/css/app.css',
-    './dest/css/vue.css'
+    './dest/css/vue.css',
+    './dest/css/*.vue.css',
   ], {
     allowEmpty: true
   })

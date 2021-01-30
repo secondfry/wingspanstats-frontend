@@ -1,5 +1,5 @@
-import axios from 'axios'
-import Vue from 'vue'
+import axios from 'axios';
+import localforage from 'localforage';
 
 const events = {
   CACHE_HIT: 'PILOT_MEDALS_CACHE_HIT',
@@ -35,7 +35,7 @@ export default {
   },
   actions: {
     loadPilotMedalsFast ({ commit, dispatch }) {
-      this._vm.$getItem('pilot_medals')
+      localforage.getItem('pilot_medals')
         .then(data => {
           if (data) {
             commit(events.CACHE_HIT, data);
@@ -58,7 +58,7 @@ export default {
           return ret
         })
         .then(data => {
-          this._vm.$setItem('pilot_medals', data);
+          localforage.setItem('pilot_medals', data);
           commit(events.LOAD_SUCCESS, data);
         })
         .catch(console.log.bind(console))

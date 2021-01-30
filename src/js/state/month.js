@@ -1,8 +1,10 @@
 import axios from 'axios';
+import localforage from 'localforage';
+
+import default_state from '../components/view-month/registry-leaderboards';
 
 import sleep from '../utility/sleep';
 
-import default_state from '../components/view-month/registry-leaderboards';
 const real_default_state = JSON.parse(JSON.stringify(default_state));
 
 const events = {
@@ -76,7 +78,7 @@ export default {
 
       const { year, month } = date;
 
-      const data = await this._vm.$getItem('month-' + year + '-' + month);
+      const data = await localforage.getItem('month-' + year + '-' + month);
       const isMonthInCache = !!data;
       if (isMonthInCache && moment().diff(moment().year(year).month(month), 'months') > 1) {
         await dispatch('loadMonthFromCache', date);
@@ -88,7 +90,7 @@ export default {
     async loadMonthFromCache ({ commit, dispatch }, date) {
       const { year, month } = date;
 
-      const data = await this._vm.$getItem('month-' + year + '-' + month);
+      const data = await localforage.getItem('month-' + year + '-' + month);
       if (!data) {
         return false;
       }
@@ -116,7 +118,7 @@ export default {
       return true;
     },
     async saveDataToCache ({ commit }, { year, month, data }) {
-      await this._vm.$setItem('month-' + year + '-' + month, data);
+      await localforage.setItem('month-' + year + '-' + month, data);
     },
     async processData ({ commit }, { year, month, data }) {
       commit(events.DATA_SUMMARY, { year, month, summary: data.summary });

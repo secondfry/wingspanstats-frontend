@@ -1,6 +1,8 @@
-import axios from 'axios'
+import axios from 'axios';
+import localforage from 'localforage';
 
-import default_state from '../components/view-achievements/registry'
+import default_state from '../components/view-achievements/registry';
+
 const real_default_state = JSON.parse(JSON.stringify(default_state));
 
 const events = {
@@ -47,7 +49,7 @@ export default {
   },
   actions: {
     loadAchievementsFast ({ commit, dispatch }) {
-      this._vm.$getItem('achievements')
+      localforage.getItem('achievements')
         .then(data => {
           if (data) {
             commit(events.CACHE_HIT, data);
@@ -63,7 +65,7 @@ export default {
       return axios
         .get('/api/achievements/')
         .then(res => {
-          this._vm.$setItem('achievements', res.data);
+          localforage.setItem('achievements', res.data);
           commit(events.LOAD_SUCCESS, res.data);
         })
         .catch(console.log.bind(console))

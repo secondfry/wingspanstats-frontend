@@ -1,6 +1,8 @@
-import axios from 'axios'
+import axios from 'axios';
+import localforage from 'localforage';
 
-import default_state from '../components/view-month/registry-leaderboards'
+import default_state from '../components/view-month/registry-leaderboards';
+
 const real_default_state = JSON.parse(JSON.stringify(default_state));
 
 const events = {
@@ -24,7 +26,7 @@ export default {
   },
   actions: {
     loadCategoryCache ({ commit, dispatch }, { category }) {
-      return this._vm.$getItem([ category, 'alltime' ].join('-'))
+      return localforage.getItem([ category, 'alltime' ].join('-'))
         .then(data => {
           if (data) {
             commit(events.CACHE_HIT, { category, data });
@@ -51,7 +53,7 @@ export default {
         .get('/api/category/' + category + '/')
         .then(res => res.data)
         .then(data => {
-          this._vm.$setItem([ category, 'alltime' ].join('-'), data);
+          localforage.setItem([ category, 'alltime' ].join('-'), data);
           commit(events.LOAD_SUCCESS, { category, data });
         })
         .catch(console.log.bind(console))

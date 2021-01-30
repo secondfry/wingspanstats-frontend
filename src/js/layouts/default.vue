@@ -92,7 +92,7 @@
       <view-all-time></view-all-time>
       <slot></slot>
     </div>
-    <div class="sf-footer pt-3 text-center bg-dark">
+    <div class="sf-footer pt-3 text-center bg-dark text-light">
       <footer class="container">
         <p>
           Yours truly, <a href="https://github.com/secondfry/">SecondFry</a> (<a

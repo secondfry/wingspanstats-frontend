@@ -64,8 +64,11 @@
       <div class="container">
         <a class="navbar-brand" href="/" data-name="root" @click="navigate">Wingspan Delivery Services Statistics</a>
         <ul class="navbar-nav w-100">
-          <li class="nav-item mr-auto">
+          <li class="nav-item">
             <a class="nav-item nav-link" href="/achievements" data-name="achievements" @click="navigate">Achievements</a>
+          </li>
+          <li class="nav-item mr-auto">
+            <a class="nav-item nav-link" href="https://i.imgur.com/bBIWLde.png" target="_blank">PSA</a>
           </li>
           <li class="nav-item">
             <a class="nav-item nav-link" href="#" @click="switchSide" v-text="switchText"></a>
@@ -79,23 +82,29 @@
         </ul>
       </div>
     </nav>
+    <div class="p-3 mb-3 text-center bg-danger text-light">
+      This installation ceased fetching new deliveries.<br>
+      PSA was provided to WDS public channel on 2021-01-30 16:51.<br>
+      Lenai Chelien was kicked from WDS on 2020-09-21 01:59.<br>
+      Latest fetch on 2021-01-30 17:31.
+    </div>
     <div class="container my-3">
       <view-all-time></view-all-time>
       <slot></slot>
     </div>
-    <div class="p-3 my-3 text-center bg-success text-light">We are back!</div>
-    <footer class="sf-footer container text-center">
-      <p>
-        Yours truly, <a href="https://twitter.com/Second_Fry">@Second_Fry</a> (<a
-          href="https://zkillboard.com/character/91435934/">Lenai Chelien</a>).
-        Adapted for web by in January, 2016.<br>
-        Rewritten in March, 2016.<br>
-        Rewritten in March, 2018. Consistency!<br>
-        Also check <a target="_blank" href="https://www.youtube.com/user/SecondFry" rel="noopener">my YouTube channel</a> :P.
-      </p>
-      <p class="mb-0">Original idea by <a href="https://zkillboard.com/character/92805979/">Valtyr Farshield</a> @ <a
-          href="https://github.com/farshield/wingspanstats">GitHub</a>.</p>
-    </footer>
+    <div class="sf-footer pt-3 text-center bg-dark">
+      <footer class="container">
+        <p>
+          Yours truly, <a href="https://github.com/secondfry/">SecondFry</a> (<a
+            href="https://zkillboard.com/character/91435934/">Lenai Chelien</a>).<br>
+          Adapted for web by in January, 2016.<br>
+          Rewritten in March, 2016.<br>
+          Rewritten in March, 2018. Consistency!<br>
+          Also check <a target="_blank" href="https://www.youtube.com/user/SecondFry" rel="noopener">my YouTube channel</a> :P.
+        </p>
+        <p class="mb-0">Original idea by <a href="https://zkillboard.com/character/92805979/">Valtyr Farshield</a>.</p>
+      </footer>
+    </div>
   </div>
 </template>
 

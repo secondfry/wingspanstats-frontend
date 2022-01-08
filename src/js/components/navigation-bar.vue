@@ -8,7 +8,7 @@
       return {
         year: 2014,
         month: '07',
-        today: moment('2021-01-30T17:31:00Z')
+        today: moment()
       }
     },
     methods: {

@@ -18,8 +18,8 @@
     props: ['month', 'year'],
     data () {
       return {
-        monthData: this.month || moment('2021-01-30T17:31:00Z').month() + 1,
-        yearData: this.year || moment('2021-01-30T17:31:00Z').year(),
+        monthData: this.month || moment().month() + 1,
+        yearData: this.year || moment().year(),
         leaderboards: realLeaderboards
       }
     },
@@ -55,7 +55,7 @@
           return moment(this.yearData + '-' + this.monthData);
         }
 
-        return moment('2021-01-30T17:31:00Z');
+        return moment();
       },
       date: function () {
         if (this.monthData && this.yearData) {

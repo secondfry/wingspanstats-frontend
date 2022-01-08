@@ -80,7 +80,7 @@ export default {
 
       const data = await localforage.getItem('month-' + year + '-' + month);
       const isMonthInCache = !!data;
-      if (isMonthInCache) {
+      if (isMonthInCache && moment().diff(moment().year(year).month(month), 'months') > 1) {
         await dispatch('loadMonthFromCache', date);
         return;
       }

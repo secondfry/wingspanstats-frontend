@@ -64,11 +64,8 @@
       <div class="container">
         <a class="navbar-brand" href="/" data-name="root" @click="navigate">Wingspan Delivery Services Statistics</a>
         <ul class="navbar-nav w-100">
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="/achievements" data-name="achievements" @click="navigate">Achievements</a>
-          </li>
           <li class="nav-item mr-auto">
-            <a class="nav-item nav-link" href="https://i.imgur.com/bBIWLde.png" target="_blank">PSA</a>
+            <a class="nav-item nav-link" href="/achievements" data-name="achievements" @click="navigate">Achievements</a>
           </li>
           <li class="nav-item">
             <a class="nav-item nav-link" href="#" @click="switchSide" v-text="switchText"></a>
@@ -82,12 +79,6 @@
         </ul>
       </div>
     </nav>
-    <div class="p-3 mb-3 text-center bg-danger text-light">
-      This installation ceased fetching new deliveries.<br>
-      PSA was provided to WDS public channel on 2021-01-30 16:51.<br>
-      Lenai Chelien was kicked from WDS on 2020-09-21 01:59.<br>
-      Latest fetch on 2021-01-30 17:31.
-    </div>
     <div class="container my-3">
       <view-all-time></view-all-time>
       <slot></slot>
